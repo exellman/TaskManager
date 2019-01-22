@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">TaskManager2</string>
+        <string name="task_title_hint">Enter a title for the task.</string>
+        <string name="task_title_label">Title</string>
+        <string name="task_details_label">Details</string>
+        <string name="task_solved_label">Solved</string>
+        <string name="task_description">Description of task</string>
+        <string name="new_task">New Task</string>
+</resources>
