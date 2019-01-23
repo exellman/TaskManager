@@ -150,7 +150,7 @@ public class TaskHomeActivity extends AppCompatActivity {
     public void loadDataList(Cursor cursor, ArrayList<HashMap<String, String>> dataList) {
         if (cursor != null) {
             cursor.moveToFirst();
-            while (cursor.isAfterLast() == false) {
+            while (!cursor.isAfterLast()) {
                 HashMap<String, String> mapToday = new HashMap<String, String>();
                 mapToday.put(KEY_ID, cursor.getString(0).toString());
                 mapToday.put(KEY_TASK, cursor.getString(1).toString());

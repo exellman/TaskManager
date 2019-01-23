@@ -65,7 +65,7 @@ public class TaskDBHelper extends SQLiteOpenHelper {
         return true;
     }
 
-    public void remove(String id){
+    public void removeTask(String id){
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("delete from " + CONTACTS_TABLE_NAME + " where id = '" + id + "'");
         db.close();

@@ -97,7 +97,7 @@ public class ListTaskAdapter extends RecyclerView.Adapter<ListTaskAdapter.ListTa
                     public void onClick(DialogInterface dialog, int which) {
 
                         data.remove(position);
-                        listTaskViewHolder.db.remove(idd);
+                        listTaskViewHolder.db.removeTask(idd);
                         notifyDataSetChanged();
                         activity.recreate();
 
