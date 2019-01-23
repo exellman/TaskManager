@@ -98,7 +98,6 @@ public class TaskHomeActivity extends AppCompatActivity {
             Cursor today = mydb.getDataToday();
             loadDataList(today, todayList);
 
-
             //Load TOMORROW
             Cursor tomorrow = mydb.getDataTomorrow();
             loadDataList(tomorrow, tomorrowList);
@@ -157,6 +156,9 @@ public class TaskHomeActivity extends AppCompatActivity {
                 mapToday.put(KEY_DATE, Function.Epoch2DateString(cursor.getString(2).toString(), "dd/MM/yyyy HH:mm"));
                 mapToday.put(KEY_SOLVED, cursor.getString(3).toString());
                 dataList.add(mapToday);
+                if(dataList == todayList){
+                    ListTaskAdapter.takeInfo(dataList);
+                }
                 cursor.moveToNext();
             }
         }

@@ -18,7 +18,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".AddTaskActivity"/>
-
         <receiver android:name=".Notification_reciever"/>
 
     </application>

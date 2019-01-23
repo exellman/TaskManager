@@ -1,8 +1,6 @@
 package com.kanayev.android.taskmanager2;
 
-import android.app.AlarmManager;
 import android.app.DatePickerDialog;
-import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.database.Cursor;
@@ -17,7 +15,6 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -123,7 +120,6 @@ public class AddTaskActivity extends AppCompatActivity implements DatePickerDial
                 mydb.insertContact(nameFinal, dateFinal, solvedFinal, descriptionFinal);
                 Toast.makeText(getApplicationContext(), "Task Added.", Toast.LENGTH_SHORT).show();
             }
-            justNotif();
             finish();
         } else {
             Toast.makeText(getApplicationContext(), "Try again", Toast.LENGTH_SHORT).show();
@@ -171,32 +167,4 @@ public class AddTaskActivity extends AppCompatActivity implements DatePickerDial
         EditText task_date = (EditText) findViewById(R.id.task_date);
         task_date.setText(finalDate);
     }
-
-    public void justNotif() {
-
-        Calendar calendar = Calendar.getInstance();
-
-        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-        Date date = null;
-        try {
-            date = format.parse(dateFinal);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        calendar.setTime(date);
-
-        Intent intent = new Intent(getApplicationContext(), Notification_reciever.class);
-
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 100, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
-
-    }
-
-
-
-
-
 }

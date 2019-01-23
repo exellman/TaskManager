@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -98,7 +99,6 @@ public class TaskDBHelper extends SQLiteOpenHelper {
         Cursor res =  db.rawQuery("select * from "+CONTACTS_TABLE_NAME+
                 " WHERE date(datetime(dateStr / 1000 , 'unixepoch', 'localtime')) = date('now', 'localtime') order by id desc", null);
         return res;
-
     }
 
     public Cursor getDataTomorrow(){
