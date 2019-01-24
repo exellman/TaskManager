@@ -1,6 +1,5 @@
 package com.kanayev.android.taskmanager2;
 
-import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
@@ -24,9 +23,7 @@ public class Notification_reciever extends BroadcastReceiver {
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
         Intent repeating_intent = new Intent(context, AddTaskActivity.class);
-        repeating_intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, 1, repeating_intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, repeating_intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
                 .setContentIntent(pendingIntent)
@@ -37,6 +34,6 @@ public class Notification_reciever extends BroadcastReceiver {
                 .setVibrate(vibrate)
                 .setSound(soundUri);
 
-        notificationManager.notify(1, builder.build());
+        notificationManager.notify(0, builder.build());
     }
 }
