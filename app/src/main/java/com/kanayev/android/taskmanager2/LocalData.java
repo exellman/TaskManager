@@ -6,22 +6,28 @@ import android.content.Intent;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 
-public class ForTakeInfo {
+public class LocalData {
     static Activity activity;
-    Intent intentInfo;
+    private static HashMap<String, String> forInfo;
 
-
-    public void ForTakeInfo(Activity a, Intent intent){
+    public void LocalData(Activity a, HashMap<String, String> finalInfo){
         activity = a;
-        intentInfo = intent;
+        forInfo = finalInfo;
 
-        NotificationScheduler.setReminder(activity, intentInfo, AlarmReceiver.class);
+        NotificationHelper.setReminder(activity, AlarmReceiver.class);
     }
 
-    public Intent IntentTake(){
+    private Intent IntentTake(){
+        final Intent in = new Intent(activity, AddTaskActivity.class);
+        in.putExtra("isUpdate", true);
+        in.putExtra("id", forInfo.get(CreateTodoActivity.KEY_ID));
+        in.putExtra("task", forInfo.get(CreateTodoActivity.KEY_TASK));
+        in.putExtra("date", forInfo.get(CreateTodoActivity.KEY_DATE));
+        in.putExtra("description", forInfo.get(CreateTodoActivity.KEY_DESCRIPTION));
 
-        return intentInfo;
+        return in;
     }
 
     public  Activity get_a(){

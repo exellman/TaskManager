@@ -16,10 +16,10 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class TaskHomeActivity extends AppCompatActivity {
+public class CreateTodoActivity extends AppCompatActivity {
 
     Activity activity;
-    TaskDBHelper mydb;
+    TaskManagerDBHelper mydb;
     NoScrollRecyclerView taskListBefore, taskListToday, taskListTomorrow, taskListUpcoming;
     NestedScrollView scrollView;
     ProgressBar loader;
@@ -40,8 +40,8 @@ public class TaskHomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.task_home);
 
-        activity = TaskHomeActivity.this;
-        mydb = new TaskDBHelper(activity);
+        activity = CreateTodoActivity.this;
+        mydb = new TaskManagerDBHelper(activity);
         scrollView = (NestedScrollView) findViewById(R.id.scrollView);
         loader = (ProgressBar) findViewById(R.id.loader);
         taskListBefore = (NoScrollRecyclerView) findViewById(R.id.taskListBefore);
@@ -61,7 +61,7 @@ public class TaskHomeActivity extends AppCompatActivity {
     }
 
     public void populateData() {
-        mydb = new TaskDBHelper(activity);
+        mydb = new TaskManagerDBHelper(activity);
         scrollView.setVisibility(View.GONE);
         loader.setVisibility(View.VISIBLE);
 
@@ -166,8 +166,8 @@ public class TaskHomeActivity extends AppCompatActivity {
         }
     }
 
-    public void loadRecyclerView(final RecyclerView recyclerView, final ArrayList<HashMap<String, String>> dataList) {
-        final ListTaskAdapter adapter = new ListTaskAdapter(activity, dataList);
+    public void loadRecyclerView(final RecyclerView recyclerView, ArrayList<HashMap<String, String>> dataList) {
+        final TaskManagerAdapter adapter = new TaskManagerAdapter(activity, dataList);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(activity));
     }

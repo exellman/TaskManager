@@ -10,12 +10,12 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-public class TaskDBHelper extends SQLiteOpenHelper {
+public class TaskManagerDBHelper extends SQLiteOpenHelper {
 
     public static final String DATABASE_NAME = "ToDoDBHelper.db";
     public static final String CONTACTS_TABLE_NAME = "todo";
 
-    public TaskDBHelper(Context context)
+    public TaskManagerDBHelper(Context context)
     {
         super(context, DATABASE_NAME, null, 1);
     }

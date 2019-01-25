@@ -15,7 +15,7 @@
         android:theme="@style/AppThemeToolBar"
         tools:ignore="GoogleAppIndexingWarning"
         android:fullBackupContent="@xml/backup_descriptor">
-        <activity android:name=".TaskHomeActivity">
+        <activity android:name=".CreateTodoActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -24,8 +24,7 @@
         <activity android:name=".AddTaskActivity"/>
 
         <receiver android:name=".AlarmReceiver"
-            android:enabled="true"
-            android:exported="true">
+            android:enabled="true">
 
         <intent-filter>
             <action android:name="android.intent.action.BOOT_COMPLETED" />

@@ -11,18 +11,17 @@ public class AlarmReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
+        LocalData localData = new LocalData();
 
         if (intent.getAction() != null && context != null) {
             if (intent.getAction().equalsIgnoreCase(Intent.ACTION_BOOT_COMPLETED)) {
                 // Set the alarm here.
                 Log.d(TAG, "onReceive: BOOT_COMPLETED");
-                ForTakeInfo forTakeInfo = new ForTakeInfo();
-                NotificationScheduler.setReminder(forTakeInfo.get_a(), forTakeInfo.IntentTake(), AlarmReceiver.class );
+
+                NotificationHelper.setReminder(localData.get_a(), AlarmReceiver.class );
                 return;
             }
         }
-
-        NotificationScheduler.showTaskNotification(context, AddTaskActivity.class);
-
+        NotificationHelper.showTaskNotification(context, AddTaskActivity.class);
     }
 }

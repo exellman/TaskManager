@@ -22,7 +22,7 @@ import java.util.Locale;
 
 public class AddTaskActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
 
-    TaskDBHelper mydb;
+    TaskManagerDBHelper mydb;
     int startYear, startMonth, startDay, startHour, startMinute;
     int hourFinal, minuteFinal;
     String dateFinal;
@@ -39,7 +39,7 @@ public class AddTaskActivity extends AppCompatActivity implements DatePickerDial
         super.onCreate(savedInstanceState);
         setContentView(R.layout.task_add_new);
 
-        mydb = new TaskDBHelper(getApplicationContext());
+        mydb = new TaskManagerDBHelper(getApplicationContext());
         intent = getIntent();
         isUpdate = intent.getBooleanExtra("isUpdate", false);
 

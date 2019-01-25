@@ -20,20 +20,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 
-public class ListTaskAdapter extends RecyclerView.Adapter<ListTaskAdapter.ListTaskViewHolder> {
+public class TaskManagerAdapter extends RecyclerView.Adapter<TaskManagerAdapter.TaskManagerViewHolder> {
     private static Activity activity;
     private ArrayList<HashMap<String, String>> data;
-//    private static ArrayList<HashMap<String, String>> todayTask;
 
-    public ListTaskAdapter(Activity activity, ArrayList<HashMap<String, String>> hashMaps) {
+    public TaskManagerAdapter(Activity activity, ArrayList<HashMap<String, String>> hashMaps) {
         this.activity = activity;
         data = hashMaps;
     }
-
-
-//    public static void takeInfo(ArrayList<HashMap<String,String>> dataList) {
-//        todayTask = dataList;
-//    }
 
     public Object getItem(int position) {
         return position;
@@ -42,60 +36,59 @@ public class ListTaskAdapter extends RecyclerView.Adapter<ListTaskAdapter.ListTa
 
     @NonNull
     @Override
-    public ListTaskViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
-        return new ListTaskViewHolder(LayoutInflater.from(activity).inflate(
+    public TaskManagerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
+        return new TaskManagerViewHolder(LayoutInflater.from(activity).inflate(
                 R.layout.task_list_row, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final ListTaskViewHolder listTaskViewHolder, final int position) {
-        listTaskViewHolder.task_image.setId(position);
-        listTaskViewHolder.task_name.setId(position);
-        listTaskViewHolder.task_date.setId(position);
-        listTaskViewHolder.task_image_solved.setId(position);
+    public void onBindViewHolder(TaskManagerViewHolder taskManagerViewHolder, int position) {
+        taskManagerViewHolder.task_image.setId(position);
+        taskManagerViewHolder.task_name.setId(position);
+        taskManagerViewHolder.task_date.setId(position);
+        taskManagerViewHolder.task_image_solved.setId(position);
 
         HashMap<String, String> map = new HashMap<String, String>();
         map = data.get(position);
 
-//        HashMap<String, String> asd = new HashMap<String, String>();
-//        asd = todayTask.get(position);
-
         try{
-            listTaskViewHolder.task_name.setText(map.get(TaskHomeActivity.KEY_TASK));
-            listTaskViewHolder.task_date.setText(map.get(TaskHomeActivity.KEY_DATE));
-            listTaskViewHolder.task_image_solved.setVisibility(Function.isSolved(map.get(TaskHomeActivity.KEY_SOLVED)) ? View.VISIBLE : View.GONE);
+            taskManagerViewHolder.task_name.setText(map.get(CreateTodoActivity.KEY_TASK));
+            taskManagerViewHolder.task_date.setText(map.get(CreateTodoActivity.KEY_DATE));
+            taskManagerViewHolder.task_image_solved.setVisibility(Function.isSolved(map.get(CreateTodoActivity.KEY_SOLVED)) ? View.VISIBLE : View.GONE);
 
             ColorGenerator generator = ColorGenerator.MATERIAL;
             int color = generator.getColor(getItem(position));
-            listTaskViewHolder.task_image.setTextColor(color);
-            listTaskViewHolder.task_image.setText(Html.fromHtml("&#11044;"));
+            taskManagerViewHolder.task_image.setTextColor(color);
+            taskManagerViewHolder.task_image.setText(Html.fromHtml("&#11044;"));
 
 
         }catch(Exception e) {}
 
         final HashMap<String, String> finalMap = map;
+        final TaskManagerViewHolder tsk = taskManagerViewHolder;
+        final int pos = position;
 
         final Intent i = new Intent(activity, AddTaskActivity.class);
         i.putExtra("isUpdate", true);
-        i.putExtra("id", finalMap.get(TaskHomeActivity.KEY_ID));
-        i.putExtra("task", finalMap.get(TaskHomeActivity.KEY_TASK));
-        i.putExtra("date", finalMap.get(TaskHomeActivity.KEY_DATE));
-        i.putExtra("description", finalMap.get(TaskHomeActivity.KEY_DESCRIPTION));
-
-
-        ForTakeInfo forTakeInfo = new ForTakeInfo();
-        forTakeInfo.ForTakeInfo(activity, i);
+        i.putExtra("id", finalMap.get(CreateTodoActivity.KEY_ID));
+        i.putExtra("task", finalMap.get(CreateTodoActivity.KEY_TASK));
+        i.putExtra("date", finalMap.get(CreateTodoActivity.KEY_DATE));
+        i.putExtra("description", finalMap.get(CreateTodoActivity.KEY_DESCRIPTION));
 
 
 
-        listTaskViewHolder.parentView.setOnClickListener(new View.OnClickListener() {
+
+        LocalData localData = new LocalData();
+        localData.LocalData(activity, finalMap);
+
+        taskManagerViewHolder.parentView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 activity.startActivity(i);
             }
         });
 
-        listTaskViewHolder.parentView.setOnLongClickListener(new View.OnLongClickListener() {
+        taskManagerViewHolder.parentView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(final View v) {
 
@@ -109,8 +102,9 @@ public class ListTaskAdapter extends RecyclerView.Adapter<ListTaskAdapter.ListTa
                 adb.setPositiveButton("Ok", new AlertDialog.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
 
-                        data.remove(position);
-                        listTaskViewHolder.db.removeTask(idd);
+
+                        data.remove(pos);
+                        tsk.db.removeTask(idd);
                         notifyDataSetChanged();
                         activity.recreate();
 
@@ -131,16 +125,16 @@ public class ListTaskAdapter extends RecyclerView.Adapter<ListTaskAdapter.ListTa
         return data.size();
     }
 
-    public static class ListTaskViewHolder extends RecyclerView.ViewHolder {
+    public static class TaskManagerViewHolder extends RecyclerView.ViewHolder {
         private TextView task_image;
         private TextView task_name, task_date;
         private ImageView task_image_solved;
         private View parentView;
-        private TaskDBHelper db;
+        private TaskManagerDBHelper db;
 
-        public ListTaskViewHolder(@NonNull View itemView) {
+        public TaskManagerViewHolder(@NonNull View itemView) {
             super(itemView);
-            this.db = new TaskDBHelper(itemView.getContext());
+            this.db = new TaskManagerDBHelper(itemView.getContext());
             this.parentView = itemView;
             this.task_image = (TextView) itemView.findViewById(R.id.task_image);
             this.task_name = (TextView) itemView.findViewById(R.id.task_name);
