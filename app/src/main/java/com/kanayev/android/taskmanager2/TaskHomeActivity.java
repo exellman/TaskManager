@@ -32,6 +32,7 @@ public class TaskHomeActivity extends AppCompatActivity {
     public static String KEY_ID = "id";
     public static String KEY_TASK = "task";
     public static String KEY_DATE = "date";
+    public static String KEY_DESCRIPTION = "description";
     public static String KEY_SOLVED = "isSolved";
 
     @Override
@@ -76,7 +77,7 @@ public class TaskHomeActivity extends AppCompatActivity {
 
     }
 
-    class LoadTask extends AsyncTask<String, Void, String> {
+    public class LoadTask extends AsyncTask<String, Void, String> {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -155,10 +156,11 @@ public class TaskHomeActivity extends AppCompatActivity {
                 mapToday.put(KEY_TASK, cursor.getString(1).toString());
                 mapToday.put(KEY_DATE, Function.Epoch2DateString(cursor.getString(2).toString(), "dd/MM/yyyy HH:mm"));
                 mapToday.put(KEY_SOLVED, cursor.getString(3).toString());
+                mapToday.put(KEY_DESCRIPTION, cursor.getString(4).toString());
                 dataList.add(mapToday);
-                if(dataList == todayList){
-                    ListTaskAdapter.takeInfo(dataList);
-                }
+//                if(dataList == todayList){
+//                    ListTaskAdapter.takeInfo(dataList);
+//                }
                 cursor.moveToNext();
             }
         }

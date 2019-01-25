@@ -23,7 +23,7 @@ import java.util.HashMap;
 public class ListTaskAdapter extends RecyclerView.Adapter<ListTaskAdapter.ListTaskViewHolder> {
     private static Activity activity;
     private ArrayList<HashMap<String, String>> data;
-    private static ArrayList<HashMap<String, String>> todayTask;
+//    private static ArrayList<HashMap<String, String>> todayTask;
 
     public ListTaskAdapter(Activity activity, ArrayList<HashMap<String, String>> hashMaps) {
         this.activity = activity;
@@ -31,9 +31,9 @@ public class ListTaskAdapter extends RecyclerView.Adapter<ListTaskAdapter.ListTa
     }
 
 
-    public static void takeInfo(ArrayList<HashMap<String,String>> dataList) {
-        todayTask = dataList;
-    }
+//    public static void takeInfo(ArrayList<HashMap<String,String>> dataList) {
+//        todayTask = dataList;
+//    }
 
     public Object getItem(int position) {
         return position;
@@ -57,8 +57,8 @@ public class ListTaskAdapter extends RecyclerView.Adapter<ListTaskAdapter.ListTa
         HashMap<String, String> map = new HashMap<String, String>();
         map = data.get(position);
 
-        HashMap<String, String> asd = new HashMap<String, String>();
-        asd = todayTask.get(position);
+//        HashMap<String, String> asd = new HashMap<String, String>();
+//        asd = todayTask.get(position);
 
         try{
             listTaskViewHolder.task_name.setText(map.get(TaskHomeActivity.KEY_TASK));
@@ -80,18 +80,11 @@ public class ListTaskAdapter extends RecyclerView.Adapter<ListTaskAdapter.ListTa
         i.putExtra("id", finalMap.get(TaskHomeActivity.KEY_ID));
         i.putExtra("task", finalMap.get(TaskHomeActivity.KEY_TASK));
         i.putExtra("date", finalMap.get(TaskHomeActivity.KEY_DATE));
+        i.putExtra("description", finalMap.get(TaskHomeActivity.KEY_DESCRIPTION));
 
 
-        final HashMap<String, String> finalInfo = asd;
-
-//        final Intent in = new Intent(activity, AddTaskActivity.class);
-//        in.putExtra("isUpdate", true);
-//        in.putExtra("id", finalInfo.get(TaskHomeActivity.KEY_ID));
-//        in.putExtra("task", finalInfo.get(TaskHomeActivity.KEY_TASK));
-//        in.putExtra("date", finalInfo.get(TaskHomeActivity.KEY_DATE));
-//        new justTestNotif(activity, finalInfo);
-        NotificationScheduler.setReminder(activity, finalInfo, AlarmReceiver.class);
-//        justNotif(in);
+        ForTakeInfo forTakeInfo = new ForTakeInfo();
+        forTakeInfo.ForTakeInfo(activity, i);
 
 
 
@@ -128,40 +121,6 @@ public class ListTaskAdapter extends RecyclerView.Adapter<ListTaskAdapter.ListTa
             }
         });
     }
-
-
-//    public void justNotif(Intent in) {
-//
-//        String dateF = in.getStringExtra("date");
-//        String id = in.getStringExtra("id");
-//
-//        Calendar calendar = Calendar.getInstance();
-//
-//        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-//        Date date = null;
-//        try {
-//            date = format.parse(dateF);
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//        }
-//
-//        calendar.setTime(date);
-//
-//        Date currentDate = new Date();
-//
-//        Intent intent = new Intent(activity.getApplicationContext(), Notification_reciever.class);
-//
-//        PendingIntent pendingIntent = PendingIntent.getBroadcast(activity.getApplicationContext(), Integer.parseInt(id), intent, PendingIntent.FLAG_UPDATE_CURRENT);
-//        AlarmManager alarmManager = (AlarmManager) activity.getApplicationContext().getSystemService(ALARM_SERVICE);
-//
-//        if (currentDate.getTime() < date.getTime()) {
-//            {
-//                Log.d("Lol", "Yep");
-//                alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
-//            }
-//        }
-//    }
-
 
     public long getItemId(int position) {
         return position;

@@ -23,10 +23,9 @@
         </activity>
         <activity android:name=".AddTaskActivity"/>
 
-        <receiver android:name=".Notification_reciever"/>
-
         <receiver android:name=".AlarmReceiver"
-            android:enabled="false">
+            android:enabled="true"
+            android:exported="true">
 
         <intent-filter>
             <action android:name="android.intent.action.BOOT_COMPLETED" />
