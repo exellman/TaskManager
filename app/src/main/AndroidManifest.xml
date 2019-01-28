@@ -13,8 +13,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppThemeToolBar"
-        tools:ignore="GoogleAppIndexingWarning"
-        android:fullBackupContent="@xml/backup_descriptor">
+        tools:ignore="GoogleAppIndexingWarning">
         <activity android:name=".CreateTodoActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,6 +21,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".AddTaskActivity"/>
+        <activity android:name=".SettingsActivity"/>
 
 
         <service android:name=".TaskService"
@@ -29,7 +29,7 @@
         </service>
 
         <receiver android:name=".AlarmReceiver"
-            android:enabled="true">
+                  android:enabled="true">
 
         <intent-filter>
             <action android:name="android.intent.action.BOOT_COMPLETED" />

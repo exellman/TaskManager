@@ -31,7 +31,7 @@
                 android:paddingLeft="16dp"
                 android:paddingRight="4dp"
                 android:textColor="#ffffff"
-                android:text="Task"
+                android:text="@string/task_activity_title"
                 android:textSize="18dp"
                 android:textStyle="bold"
                 />
@@ -42,7 +42,7 @@
                 android:layout_margin="5dp"
                 android:background="@android:color/transparent"
                 android:src="@drawable/ic_action_settings"
-                android:onClick="openSettings"/>
+                android:onClick="openSettings" />
             <ImageView
                 android:layout_width="35dp"
                 android:layout_height="35dp"
@@ -82,7 +82,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
-                android:text="Before"
+                android:text="@string/task_before_text"
                 android:textSize="16sp"
                 android:textColor="#CCCCCC"/>
 
@@ -110,7 +110,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
-                android:text="Today"
+                android:text="@string/task_today_text"
                 android:textSize="16sp"
                 android:textColor="#CCCCCC"/>
 
@@ -138,7 +138,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
-                android:text="Tomorrow"
+                android:text="@string/task_tomorrow_text"
                 android:textSize="16sp"
                 android:textColor="#CCCCCC"/>
 
@@ -166,7 +166,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
-                android:text="Upcoming Next"
+                android:text="@string/task_upcoming_text"
                 android:textSize="16sp"
                 android:textColor="#CCCCCC"/>
 

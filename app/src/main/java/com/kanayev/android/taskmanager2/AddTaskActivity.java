@@ -61,7 +61,7 @@ public class AddTaskActivity extends AppCompatActivity implements DatePickerDial
         EditText task_description = (EditText) findViewById(R.id.task_description);
         CheckBox task_solved_checkbox = (CheckBox) findViewById(R.id.task_solved_checkbox);
 
-        toolbar_task_add_title.setText("Update");
+        toolbar_task_add_title.setText(getResources().getString(R.string.task_update_title));
         Cursor task = mydb.getDataSpecific(id);
 
         if (task != null) {

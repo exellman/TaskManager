@@ -56,7 +56,8 @@ public class CreateTodoActivity extends AppCompatActivity {
     }
 
     public void openSettings(View v) {
-
+        Intent i = new Intent(this, SettingsActivity.class);
+        startActivity(i);
     }
 
     public void openAddTask(View v) {

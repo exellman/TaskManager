@@ -1,9 +1,29 @@
 <resources>
-    <string name="app_name">TaskManager2</string>
+        <!--App Name-->
+        <string name="app_name">TaskManager</string>
+
+        <!--Add new Task-->
+        <string name="task_create_title">Create</string>
+        <string name="task_update_title">Update</string>
         <string name="task_title_hint">Enter a title for the task.</string>
         <string name="task_title_label">Title</string>
         <string name="task_details_label">Details</string>
         <string name="task_solved_label">Solved</string>
         <string name="task_description">Description of task</string>
-        <string name="new_task">New Task</string>
+
+
+        <!--Task Manager Activity-->
+        <string name="task_activity_title">Task</string>
+        <string name="task_before_text">Before</string>
+        <string name="task_today_text">Today</string>
+        <string name="task_tomorrow_text">Tomorrow</string>
+        <string name="task_upcoming_text">Upcoming Next</string>
+
+        <!--Settings-->
+        <string name="settings_title_text">Settings</string>
+        <string name="task_notification_settings">Task Notification Settings</string>
+        <string name="settings_sound_text">Sound</string>
+        <string name="settings_vibrate_text">Vibrate</string>
+        <string name="day_notification_settings">Day Notification Settings</string>
+        <string name="set_notification_time_text">Set notification time</string>
 </resources>

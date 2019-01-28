@@ -3,9 +3,6 @@ package com.kanayev.android.taskmanager2;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
-
-import java.util.Date;
 
 public class AlarmReceiver extends BroadcastReceiver {
 
@@ -18,24 +15,6 @@ public class AlarmReceiver extends BroadcastReceiver {
 
 
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 //        LocalData localData = new LocalData();
 //

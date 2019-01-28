@@ -3,7 +3,6 @@ package com.kanayev.android.taskmanager2;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
@@ -19,7 +18,6 @@ import com.amulyakhare.textdrawable.util.ColorGenerator;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-
 public class TaskManagerAdapter extends RecyclerView.Adapter<TaskManagerAdapter.TaskManagerViewHolder> {
     private static Activity activity;
     private ArrayList<HashMap<String, String>> data;
@@ -34,9 +32,8 @@ public class TaskManagerAdapter extends RecyclerView.Adapter<TaskManagerAdapter.
     }
 
 
-    @NonNull
     @Override
-    public TaskManagerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
+    public TaskManagerViewHolder onCreateViewHolder(ViewGroup parent, int i) {
         return new TaskManagerViewHolder(LayoutInflater.from(activity).inflate(
                 R.layout.task_list_row, parent, false));
     }
@@ -128,7 +125,7 @@ public class TaskManagerAdapter extends RecyclerView.Adapter<TaskManagerAdapter.
         private View parentView;
         private TaskManagerDBHelper db;
 
-        public TaskManagerViewHolder(@NonNull View itemView) {
+        public TaskManagerViewHolder(View itemView) {
             super(itemView);
             this.db = new TaskManagerDBHelper(itemView.getContext());
             this.parentView = itemView;

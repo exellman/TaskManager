@@ -13,16 +13,13 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
-import android.support.v4.app.TaskStackBuilder;
 import android.util.Log;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 
 public class TaskService extends IntentService {
 
@@ -53,16 +50,23 @@ public class TaskService extends IntentService {
         }
 
         long[] vibrate = new long[2];
+        if (SettingsPreferences.getPrefVibration(getApplicationContext())) {
             vibrate[0] = 500;
             vibrate[1] = 500;
+        }
 
         Uri soundUri = null;
+        if (SettingsPreferences.getPrefSound(getApplicationContext())) {
             soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE);
-
+        }
 
         if ((Integer.parseInt(intent.getStringExtra("id")) != 0)) {
             showTaskNotification(intent, vibrate, soundUri, id, taskName);
             return;
+        }
+
+        if (SettingsPreferences.getPrefSummary(getApplicationContext())) {
+            showDayNotification(vibrate, soundUri);
         }
     }
 
@@ -87,6 +91,43 @@ public class TaskService extends IntentService {
         notificationManager.notify(Integer.parseInt(id), notification);
 
         Log.i(TAG, "Notification with task '" + taskName + "' is showed");
+    }
+
+    private void showDayNotification(long[] vibrate, Uri soundUri) {
+        Log.i(TAG, "Check day's tasks");
+
+//        Date currentDay = new Date();
+//        GetAllTasksInteractor interactor = new GetAllTasksInteractor();
+//        List<Task> allTasks = interactor.getAllTasks();
+//        ArrayList<Task> todayTasks = new ArrayList<>();
+//
+//        for (Task task :
+//                allTasks) {
+//            if(task.getDate().getDate() == currentDay.getDate() &&
+//                    task.getDate().getMonth() == currentDay.getMonth()){
+//                Intent i = new Intent(getApplicationContext(), DaySummaryActivity.class);
+//
+//                TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+//                stackBuilder.addNextIntentWithParentStack(i);
+//
+//                PendingIntent pi = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_CANCEL_CURRENT);
+//
+//                Notification notification = new NotificationCompat.Builder(this)
+//                        .setSmallIcon(android.R.drawable.ic_menu_report_image)
+//                        .setContentTitle("Check your summary")
+//                        .setContentIntent(pi)
+//                        .setAutoCancel(true)
+//                        .setVibrate(vibrate)
+//                        .setSound(soundUri)
+//                        .build();
+//
+//                NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+//                notificationManager.notify(0, notification);
+//
+//                Log.i(TAG, "Day notification is showed");
+//                break;
+//            }
+//        }
     }
 
     public static void setTaskAlarm(Context context, HashMap<String, String> forInfo) {
@@ -117,4 +158,50 @@ public class TaskService extends IntentService {
             Log.i(TAG, "Task " + name + " added");
         }
     }
+
+    public static void setDayAlarm(Context context, Date time, boolean isOn) {
+        cancelReminder(context);
+
+        ComponentName receiver = new ComponentName(context, AlarmReceiver.class);
+        PackageManager pm = context.getPackageManager();
+
+        pm.setComponentEnabledSetting(receiver,
+                PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+                PackageManager.DONT_KILL_APP);
+
+        Intent i = TaskService.newIntent(context);
+        PendingIntent pi = PendingIntent.getService(context, 1, i, PendingIntent.FLAG_UPDATE_CURRENT);
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+
+        if (isOn) {
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(Calendar.HOUR_OF_DAY, time.getHours());
+            calendar.set(Calendar.MINUTE, time.getMinutes());
+            alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pi);
+            Log.i(TAG, "Day summary notification has changed");
+            Log.i(TAG, calendar.getTime().toString());
+        } else {
+            alarmManager.cancel(pi);
+            pi.cancel();
+        }
+
+    }
+
+    private static void cancelReminder(Context context){
+        ComponentName receiver = new ComponentName(context, AlarmReceiver.class);
+        PackageManager pm = context.getPackageManager();
+
+        pm.setComponentEnabledSetting(receiver,
+                PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+                PackageManager.DONT_KILL_APP);
+
+        Intent intent = TaskService.newIntent(context);
+        PendingIntent pi = PendingIntent.getService(context, 1, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        am.cancel(pi);
+        pi.cancel();
+    }
+
+
+
 }
