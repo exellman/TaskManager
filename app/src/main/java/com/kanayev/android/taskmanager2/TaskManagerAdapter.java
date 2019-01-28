@@ -75,11 +75,7 @@ public class TaskManagerAdapter extends RecyclerView.Adapter<TaskManagerAdapter.
         i.putExtra("date", finalMap.get(CreateTodoActivity.KEY_DATE));
         i.putExtra("description", finalMap.get(CreateTodoActivity.KEY_DESCRIPTION));
 
-
-
-
-        LocalData localData = new LocalData();
-        localData.LocalData(activity, finalMap);
+        TaskService.setTaskAlarm(activity, finalMap);
 
         taskManagerViewHolder.parentView.setOnClickListener(new View.OnClickListener() {
             @Override

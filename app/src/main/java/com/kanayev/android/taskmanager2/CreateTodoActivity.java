@@ -55,6 +55,10 @@ public class CreateTodoActivity extends AppCompatActivity {
         upcomingText = (TextView) findViewById(R.id.upcomingText);
     }
 
+    public void openSettings(View v) {
+
+    }
+
     public void openAddTask(View v) {
         Intent i = new Intent(this, AddTaskActivity.class);
         startActivity(i);
@@ -72,9 +76,7 @@ public class CreateTodoActivity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-
         populateData();
-
     }
 
     public class LoadTask extends AsyncTask<String, Void, String> {
@@ -158,9 +160,6 @@ public class CreateTodoActivity extends AppCompatActivity {
                 mapToday.put(KEY_SOLVED, cursor.getString(3).toString());
                 mapToday.put(KEY_DESCRIPTION, cursor.getString(4).toString());
                 dataList.add(mapToday);
-//                if(dataList == todayList){
-//                    ListTaskAdapter.takeInfo(dataList);
-//                }
                 cursor.moveToNext();
             }
         }

@@ -5,23 +5,48 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
+import java.util.Date;
+
 public class AlarmReceiver extends BroadcastReceiver {
 
-    String TAG = "AlarmReceiver";
+    private static final String TAG = "AlarmReceiver";
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        LocalData localData = new LocalData();
 
-        if (intent.getAction() != null && context != null) {
-            if (intent.getAction().equalsIgnoreCase(Intent.ACTION_BOOT_COMPLETED)) {
-                // Set the alarm here.
-                Log.d(TAG, "onReceive: BOOT_COMPLETED");
-
-                NotificationHelper.setReminder(localData.get_a(), AlarmReceiver.class );
-                return;
-            }
         }
-        NotificationHelper.showTaskNotification(context, AddTaskActivity.class);
+
+
     }
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//        LocalData localData = new LocalData();
+//
+//        if (intent.getAction() != null && context != null) {
+//            if (intent.getAction().equalsIgnoreCase(Intent.ACTION_BOOT_COMPLETED)) {
+//                // Set the alarm here.
+//                Log.d(TAG, "onReceive: BOOT_COMPLETED");
+//
+//                NotificationHelper.setReminder(localData.get_a(), AlarmReceiver.class );
+//                return;
+//            }
+//        }
+//        NotificationHelper.showTaskNotification(context, AddTaskActivity.class);
+
