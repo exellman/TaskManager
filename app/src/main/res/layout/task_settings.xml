@@ -184,6 +184,20 @@
             app:layout_constraintTop_toTopOf="parent" />
 
 
+        <Button
+            android:id="@+id/btn_show_day_summary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:layout_marginTop="215dp"
+            android:background="#25252F"
+            android:onClick="openDaySummary"
+            android:text="Show"
+            android:textColor="#000000"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="MissingConstraints" />
+
 
     </android.support.constraint.ConstraintLayout>
 

@@ -8,7 +8,7 @@
         <string name="task_title_hint">Enter a title for the task.</string>
         <string name="task_title_label">Title</string>
         <string name="task_details_label">Details</string>
-        <string name="task_solved_label">Solved</string>
+        <string name="task_done_label">Done!</string>
         <string name="task_description">Description of task</string>
 
 
@@ -26,4 +26,8 @@
         <string name="settings_vibrate_text">Vibrate</string>
         <string name="day_notification_settings">Day Notification Settings</string>
         <string name="set_notification_time_text">Set notification time</string>
+
+        <!--Day Summary-->
+        <string name="day_summary_title">Day Summary</string>
+        <string name="day_summary">Task(s)</string>
 </resources>

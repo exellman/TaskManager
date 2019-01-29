@@ -20,8 +20,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AddTaskActivity"/>
-        <activity android:name=".SettingsActivity"/>
+        <activity android:name=".AddTaskActivity"
+            android:parentActivityName=".CreateTodoActivity"/>
+        <activity android:name=".SettingsActivity"
+            android:parentActivityName=".CreateTodoActivity"/>
+        <activity android:name=".DaySummaryActivity"
+            android:parentActivityName=".CreateTodoActivity"/>
 
 
         <service android:name=".TaskService"

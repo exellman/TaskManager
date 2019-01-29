@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#1E1D25">
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_day_summary"
+        android:layout_alignParentTop="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="1"
+            android:gravity="center_vertical">
+            <ImageView
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:padding="5dp"
+                android:layout_margin="5dp"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_action_back"
+                android:onClick="closeDaySummary"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawablePadding="0dp"
+                android:gravity="center_vertical|start"
+                android:paddingLeft="16dp"
+                android:paddingRight="4dp"
+                android:textColor="#ffffff"
+                android:text="@string/day_summary_title"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                />
+
+        </LinearLayout>
+
+    </android.support.v7.widget.Toolbar>
+
+    <ProgressBar
+        android:id="@+id/loader_day_summary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"/>
+
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/scrollView_day_summary"
+        android:layout_below="@+id/toolbar_day_summary"
+        android:isScrollContainer="false"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="fill_vertical"
+        android:clipToPadding="false"
+        android:visibility="visible"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/daySummaryText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="@string/day_summary"
+                android:textSize="16sp"
+                android:textColor="#CCCCCC"/>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/colorPrimary"
+                android:descendantFocusability="blocksDescendants"
+                android:layout_marginRight="12dp"
+                android:layout_marginLeft="12dp">
+
+                <com.kanayev.android.taskmanager2.NoScrollRecyclerView
+                    android:id="@+id/taskListDaySummary"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="?attr/colorPrimary"
+                    android:divider="#333232"
+                    android:dividerHeight="1dp"
+                    android:visibility="visible"
+                    />
+            </android.support.v7.widget.CardView>
+
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+</RelativeLayout>

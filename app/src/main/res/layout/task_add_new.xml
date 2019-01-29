@@ -147,7 +147,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:checked="false"
-            android:text="@string/task_solved_label"
+            android:text="@string/task_done_label"
             android:textColor="#CCCCCC" />
 
     </LinearLayout>

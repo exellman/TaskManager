@@ -95,13 +95,12 @@ public class TaskManagerAdapter extends RecyclerView.Adapter<TaskManagerAdapter.
                 adb.setPositiveButton("Ok", new AlertDialog.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
 
+//                    data.remove(pos);
+//                    notifyDataSetChanged();
+                    tsk.db.removeTask(idd);
+                    activity.recreate();
 
-                        data.remove(pos);
-                        tsk.db.removeTask(idd);
-                        notifyDataSetChanged();
-                        activity.recreate();
-
-                        Toast.makeText(v.getContext(), "Task " + taskName + " Removed.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(v.getContext(), "Task " + taskName + " Removed.", Toast.LENGTH_SHORT).show();
                     }});
                 adb.show();
                 return true;

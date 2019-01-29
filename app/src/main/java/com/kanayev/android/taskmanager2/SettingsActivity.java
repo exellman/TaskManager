@@ -1,6 +1,7 @@
 package com.kanayev.android.taskmanager2;
 
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -108,5 +109,10 @@ public class SettingsActivity extends AppCompatActivity implements TimePickerDia
     public void closeSettings(View v) {
         Toast.makeText(getApplicationContext(), "Settings Updated.", Toast.LENGTH_SHORT).show();
         finish();
+    }
+
+    public void openDaySummary(View v) {
+        Intent intent = new Intent(this, DaySummaryActivity.class);
+        startActivity(intent);
     }
 }
