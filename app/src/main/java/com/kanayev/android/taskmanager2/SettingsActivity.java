@@ -39,7 +39,7 @@ public class SettingsActivity extends AppCompatActivity implements TimePickerDia
         switchVibrate.setChecked(SettingsPreferences.getPrefVibration(this));
         switchSummary.setChecked(SettingsPreferences.getPrefSummary(this));
         Date dateFromPreferences = new Date(SettingsPreferences.getPrefTime(this));
-        dateSummary.setText(dateFromPreferences.getHours() + ":" + (dateFromPreferences.getMinutes()<10?'0':"") + dateFromPreferences.getMinutes());
+        dateSummary.setText(dateFromPreferences.getHours() + ":" + (dateFromPreferences.getMinutes() < 10 ? '0' : "") + dateFromPreferences.getMinutes());
         menageViews(SettingsPreferences.getPrefSummary(this));
 
         switchSound.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -65,7 +65,7 @@ public class SettingsActivity extends AppCompatActivity implements TimePickerDia
         });
     }
 
-    public void chooseSummaryTime(View v){
+    public void chooseSummaryTime(View v) {
         Calendar c = Calendar.getInstance();
         startHour = c.get(Calendar.HOUR_OF_DAY);
         startMinute = c.get(Calendar.MINUTE);
@@ -79,7 +79,7 @@ public class SettingsActivity extends AppCompatActivity implements TimePickerDia
         hourFinal = hourOfDay;
         minuteFinal = minute;
 
-        String timeStr = (hourFinal < 10 ? "0" + hourFinal : ""  +hourFinal) + ":" + (minuteFinal < 10 ? "0" + minuteFinal : "" + minuteFinal);
+        String timeStr = (hourFinal < 10 ? "0" + hourFinal : "" + hourFinal) + ":" + (minuteFinal < 10 ? "0" + minuteFinal : "" + minuteFinal);
 
         SimpleDateFormat format = new SimpleDateFormat("HH:mm");
         Date finalDate = null;
@@ -97,11 +97,9 @@ public class SettingsActivity extends AppCompatActivity implements TimePickerDia
 
     private void menageViews(boolean isVisible) {
         dateSummary.setEnabled(isVisible);
-        if(isVisible){
-            dateSummary.setTextColor(Color.parseColor("#000000"));
+        if (isVisible) {
             dateSummary.setTextColor(Color.parseColor("#000000"));
         } else {
-            dateSummary.setTextColor(Color.parseColor("#1E1D23"));
             dateSummary.setTextColor(Color.parseColor("#1E1D23"));
         }
     }

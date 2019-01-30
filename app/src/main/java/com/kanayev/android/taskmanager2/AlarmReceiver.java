@@ -11,10 +11,10 @@ public class AlarmReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
 
-        }
-
-
     }
+
+
+}
 
 //        LocalData localData = new LocalData();
 //

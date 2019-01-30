@@ -23,7 +23,7 @@ public class TaskManagerAdapter extends RecyclerView.Adapter<TaskManagerAdapter.
     private ArrayList<HashMap<String, String>> data;
 
     public TaskManagerAdapter(Activity activity, ArrayList<HashMap<String, String>> hashMaps) {
-        this.activity = activity;
+        TaskManagerAdapter.activity = activity;
         data = hashMaps;
     }
 
@@ -39,7 +39,7 @@ public class TaskManagerAdapter extends RecyclerView.Adapter<TaskManagerAdapter.
     }
 
     @Override
-    public void onBindViewHolder(TaskManagerViewHolder taskManagerViewHolder, int position) {
+    public void onBindViewHolder(final TaskManagerViewHolder taskManagerViewHolder, int position) {
         taskManagerViewHolder.task_image.setId(position);
         taskManagerViewHolder.task_name.setId(position);
         taskManagerViewHolder.task_date.setId(position);
@@ -48,10 +48,10 @@ public class TaskManagerAdapter extends RecyclerView.Adapter<TaskManagerAdapter.
         HashMap<String, String> map = new HashMap<String, String>();
         map = data.get(position);
 
-        try{
+        try {
             taskManagerViewHolder.task_name.setText(map.get(CreateTodoActivity.KEY_TASK));
             taskManagerViewHolder.task_date.setText(map.get(CreateTodoActivity.KEY_DATE));
-            taskManagerViewHolder.task_image_solved.setVisibility(Function.isSolved(map.get(CreateTodoActivity.KEY_SOLVED)) ? View.VISIBLE : View.GONE);
+            taskManagerViewHolder.task_image_solved.setVisibility(HelpUtils.isSolved(map.get(CreateTodoActivity.KEY_DONE)) ? View.VISIBLE : View.GONE);
 
             ColorGenerator generator = ColorGenerator.MATERIAL;
             int color = generator.getColor(getItem(position));
@@ -59,7 +59,8 @@ public class TaskManagerAdapter extends RecyclerView.Adapter<TaskManagerAdapter.
             taskManagerViewHolder.task_image.setText(Html.fromHtml("&#11044;"));
 
 
-        }catch(Exception e) {}
+        } catch (Exception e) {
+        }
 
         final HashMap<String, String> finalMap = map;
         final TaskManagerViewHolder tsk = taskManagerViewHolder;
@@ -71,6 +72,7 @@ public class TaskManagerAdapter extends RecyclerView.Adapter<TaskManagerAdapter.
         i.putExtra("task", finalMap.get(CreateTodoActivity.KEY_TASK));
         i.putExtra("date", finalMap.get(CreateTodoActivity.KEY_DATE));
         i.putExtra("description", finalMap.get(CreateTodoActivity.KEY_DESCRIPTION));
+        i.putExtra("interval", finalMap.get(CreateTodoActivity.KEY_INTERVAL));
 
         TaskService.setTaskAlarm(activity, finalMap);
 
@@ -95,13 +97,15 @@ public class TaskManagerAdapter extends RecyclerView.Adapter<TaskManagerAdapter.
                 adb.setPositiveButton("Ok", new AlertDialog.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
 
-//                    data.remove(pos);
-//                    notifyDataSetChanged();
-                    tsk.db.removeTask(idd);
-                    activity.recreate();
+                        TaskService.cancelReminder(activity, Integer.parseInt(idd));
+                        data.remove(pos);
+                        notifyDataSetChanged();
+                        tsk.db.removeTask(idd);
+                        activity.recreate();
 
-                    Toast.makeText(v.getContext(), "Task " + taskName + " Removed.", Toast.LENGTH_SHORT).show();
-                    }});
+                        Toast.makeText(v.getContext(), "Task " + taskName + " Removed.", Toast.LENGTH_SHORT).show();
+                    }
+                });
                 adb.show();
                 return true;
             }
@@ -128,10 +132,10 @@ public class TaskManagerAdapter extends RecyclerView.Adapter<TaskManagerAdapter.
             super(itemView);
             this.db = new TaskManagerDBHelper(itemView.getContext());
             this.parentView = itemView;
-            this.task_image = (TextView) itemView.findViewById(R.id.task_image);
-            this.task_name = (TextView) itemView.findViewById(R.id.task_name);
-            this.task_date = (TextView) itemView.findViewById(R.id.task_date);
-            this.task_image_solved = (ImageView) itemView.findViewById(R.id.task_image_solved);
+            this.task_image = itemView.findViewById(R.id.task_image);
+            this.task_name = itemView.findViewById(R.id.task_name);
+            this.task_date = itemView.findViewById(R.id.task_date);
+            this.task_image_solved = itemView.findViewById(R.id.task_image_solved);
         }
     }
 }

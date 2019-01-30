@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#1E1D25">
@@ -22,19 +21,29 @@
             android:orientation="horizontal"
             android:weightSum="1"
             android:gravity="center_vertical">
+
+            <ImageView
+                android:id="@+id/changeTasks"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:padding="5dp"
+                android:layout_marginTop="1dp"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_action_all_tasks"
+                android:onClick="changeTasks"/>
+
             <TextView
-                android:layout_width="0dp"
+                android:layout_width="174dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:drawablePadding="0dp"
                 android:gravity="center_vertical|start"
-                android:paddingLeft="16dp"
                 android:paddingRight="4dp"
-                android:textColor="#ffffff"
                 android:text="@string/task_activity_title"
+                android:textColor="#ffffff"
                 android:textSize="18dp"
-                android:textStyle="bold"
-                />
+                android:textStyle="bold" />
+
+
             <ImageView
                 android:layout_width="35dp"
                 android:layout_height="35dp"

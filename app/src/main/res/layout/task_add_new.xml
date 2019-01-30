@@ -62,8 +62,8 @@
         android:orientation="vertical"
         android:layout_below="@+id/toolbar_task_add"
         android:background="#1E1D23"
-        android:paddingLeft="30dp"
-        android:paddingRight="30dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
         android:layout_centerInParent="true"
         android:layout_centerHorizontal="true"
         android:gravity="center">
@@ -143,12 +143,51 @@
             android:layout_height="2dp"
             android:background="#D2D2D2"/>
         <CheckBox
-            android:id="@+id/task_solved_checkbox"
+            android:id="@+id/task_done_checkbox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:checked="false"
             android:text="@string/task_done_label"
             android:textColor="#CCCCCC" />
+
+        <RadioGroup
+            android:id="@+id/rg_frequency"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RadioButton
+                android:id="@+id/rb_none"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/none"
+                android:checked="true"/>
+
+            <RadioButton
+                android:id="@+id/rb_day"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/day"/>
+
+            <RadioButton
+                android:id="@+id/rb_week"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/week"/>
+
+            <RadioButton
+                android:id="@+id/rb_month"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/month"/>
+
+            <RadioButton
+                android:id="@+id/rb_year"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/year"/>
+
+        </RadioGroup>
 
     </LinearLayout>
 

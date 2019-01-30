@@ -26,18 +26,20 @@ public class DaySummaryActivity extends AppCompatActivity {
     TextView daySummaryText;
     ArrayList<HashMap<String, String>> daySummaryList = new ArrayList<HashMap<String, String>>();
 
-    int tasksDone = 0;
-
     public static String KEY_ID = "id";
     public static String KEY_TASK = "task";
     public static String KEY_DATE = "date";
     public static String KEY_DESCRIPTION = "description";
-    public static String KEY_SOLVED = "isSolved";
+    public static String KEY_DONE = "isDone";
+    public static String KEY_INTERVAL = "interval";
+
+    int tasksDone;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.task_day_summary);
+
 
         activity = DaySummaryActivity.this;
         mydb = new TaskManagerDBHelper(activity);
@@ -77,6 +79,8 @@ public class DaySummaryActivity extends AppCompatActivity {
         protected void onPreExecute() {
             super.onPreExecute();
 
+            tasksDone = 0;
+
             daySummaryList.clear();
         }
 
@@ -96,9 +100,9 @@ public class DaySummaryActivity extends AppCompatActivity {
             loadRecyclerView(taskListDaySummary, daySummaryList);
 
             if (daySummaryList.size() > 0) {
-                daySummaryText.setText("For today you have " + daySummaryList.size() + " task(s). You still should done " + (daySummaryList.size() - tasksDone)  + " task(s).");
+                daySummaryText.setText("For today you have " + daySummaryList.size() + " task(s). You still should done " + (daySummaryList.size() - tasksDone) + " task(s).");
             } else {
-                daySummaryText.setText("You have no tasks for today");
+                daySummaryText.setText(R.string.day_summary_no_tasks);
             }
 
             loader.setVisibility(View.GONE);
@@ -113,9 +117,15 @@ public class DaySummaryActivity extends AppCompatActivity {
                 HashMap<String, String> mapToday = new HashMap<String, String>();
                 mapToday.put(KEY_ID, cursor.getString(0).toString());
                 mapToday.put(KEY_TASK, cursor.getString(1).toString());
-                mapToday.put(KEY_DATE, Function.Epoch2DateString(cursor.getString(2).toString(), "dd/MM/yyyy HH:mm"));
-                mapToday.put(KEY_SOLVED, cursor.getString(3).toString());
+                mapToday.put(KEY_DATE, HelpUtils.Epoch2DateString(cursor.getString(2).toString(), "dd/MM/yyyy HH:mm"));
+                mapToday.put(KEY_DONE, cursor.getString(3).toString());
                 mapToday.put(KEY_DESCRIPTION, cursor.getString(4).toString());
+                mapToday.put(KEY_INTERVAL, cursor.getString(5).toString());
+
+                if (mapToday.get(KEY_DONE).compareTo("true") == 0) {
+                    tasksDone++;
+                }
+
                 dataList.add(mapToday);
                 cursor.moveToNext();
             }

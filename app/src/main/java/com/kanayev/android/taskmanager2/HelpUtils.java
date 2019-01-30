@@ -3,12 +3,13 @@ package com.kanayev.android.taskmanager2;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
-public class Function {
+public class HelpUtils {
 
     public static String Epoch2DateString(String epochSeconds, String formatString) {
         Date updatedate = new Date(Long.parseLong(epochSeconds));
-        SimpleDateFormat format = new SimpleDateFormat(formatString);
+        SimpleDateFormat format = new SimpleDateFormat(formatString, Locale.getDefault());
         return format.format(updatedate);
     }
 

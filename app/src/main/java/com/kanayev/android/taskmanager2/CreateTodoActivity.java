@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -18,12 +19,15 @@ import java.util.HashMap;
 
 public class CreateTodoActivity extends AppCompatActivity {
 
+    long clck = 0;
+
     Activity activity;
     TaskManagerDBHelper mydb;
     NoScrollRecyclerView taskListBefore, taskListToday, taskListTomorrow, taskListUpcoming;
     NestedScrollView scrollView;
     ProgressBar loader;
     TextView beforeText, todayText, tomorrowText, upcomingText;
+    ImageView changeTasks;
     ArrayList<HashMap<String, String>> beforeList = new ArrayList<HashMap<String, String>>();
     ArrayList<HashMap<String, String>> todayList = new ArrayList<HashMap<String, String>>();
     ArrayList<HashMap<String, String>> tomorrowList = new ArrayList<HashMap<String, String>>();
@@ -32,14 +36,18 @@ public class CreateTodoActivity extends AppCompatActivity {
     public static String KEY_ID = "id";
     public static String KEY_TASK = "task";
     public static String KEY_DATE = "date";
+    public static String KEY_DONE = "isDone";
     public static String KEY_DESCRIPTION = "description";
-    public static String KEY_SOLVED = "isSolved";
+    public static String KEY_INTERVAL = "interval";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.task_home);
 
+        clck = SettingsPreferences.getPrefCheck(this);
+        changeTasks = (ImageView) findViewById(R.id.changeTasks);
         activity = CreateTodoActivity.this;
         mydb = new TaskManagerDBHelper(activity);
         scrollView = (NestedScrollView) findViewById(R.id.scrollView);
@@ -79,6 +87,7 @@ public class CreateTodoActivity extends AppCompatActivity {
         super.onResume();
         populateData();
     }
+
 
     public class LoadTask extends AsyncTask<String, Void, String> {
         @Override
@@ -157,10 +166,22 @@ public class CreateTodoActivity extends AppCompatActivity {
                 HashMap<String, String> mapToday = new HashMap<String, String>();
                 mapToday.put(KEY_ID, cursor.getString(0).toString());
                 mapToday.put(KEY_TASK, cursor.getString(1).toString());
-                mapToday.put(KEY_DATE, Function.Epoch2DateString(cursor.getString(2).toString(), "dd/MM/yyyy HH:mm"));
-                mapToday.put(KEY_SOLVED, cursor.getString(3).toString());
+                mapToday.put(KEY_DATE, HelpUtils.Epoch2DateString(cursor.getString(2).toString(), "dd/MM/yyyy HH:mm"));
+                mapToday.put(KEY_DONE, cursor.getString(3).toString());
                 mapToday.put(KEY_DESCRIPTION, cursor.getString(4).toString());
-                dataList.add(mapToday);
+                mapToday.put(KEY_INTERVAL, cursor.getString(5).toString());
+
+                if (clck == 0) {
+                    dataList.add(mapToday);
+                } else if (clck == 1) {
+                    if (mapToday.get(KEY_DONE).compareTo("false") == 0) {
+                        dataList.add(mapToday);
+                    }
+                } else if (clck == 2) {
+                    if (mapToday.get(KEY_DONE).compareTo("true") == 0) {
+                        dataList.add(mapToday);
+                    }
+                }
                 cursor.moveToNext();
             }
         }
@@ -171,4 +192,26 @@ public class CreateTodoActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(activity));
     }
+
+    public void changeTasks(View v) {
+
+        LoadTask loadTask = new LoadTask();
+        if (clck == 0) {
+            loadTask.execute();
+            SettingsPreferences.setPrefCheck(this, clck);
+            changeTasks.setImageResource(R.drawable.ic_action_to_do);
+            clck++;
+        } else if (clck == 1) {
+            loadTask.execute();
+            SettingsPreferences.setPrefCheck(this, clck);
+            changeTasks.setImageResource(R.drawable.ic_action_done_tasks);
+            clck++;
+        } else if (clck == 2) {
+            loadTask.execute();
+            SettingsPreferences.setPrefCheck(this, clck);
+            changeTasks.setImageResource(R.drawable.ic_action_all_tasks);
+            clck = clck - 2;
+        }
+    }
+
 }

@@ -15,6 +15,7 @@ import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -25,8 +26,6 @@ import java.util.HashMap;
 public class TaskService extends IntentService {
 
     private static final String TAG = "TaskService";
-
-
 
     public TaskService() {
         super(TAG);
@@ -43,6 +42,8 @@ public class TaskService extends IntentService {
         String id = intent.getStringExtra("id");
 
         String taskName = null;
+        String isDone = null;
+        String interval = null;
 
 
         TaskManagerDBHelper mydb = new TaskManagerDBHelper(getApplicationContext());
@@ -64,25 +65,30 @@ public class TaskService extends IntentService {
             if (task != null) {
                 task.moveToFirst();
                 taskName = task.getString(1).toString();
+                isDone = task.getString(3).toString();
+                interval = task.getString(5).toString();
                 task.close();
             }
-            showTaskNotification(intent, vibrate, soundUri, id, taskName);
+            showTaskNotification(intent, vibrate, soundUri, id, taskName, isDone, interval);
             return;
         }
 
         if (SettingsPreferences.getPrefSummary(getApplicationContext())) {
             showDayNotification(vibrate, soundUri);
         }
-
-
     }
 
-    private void showTaskNotification(Intent intent, long[] vibrate, Uri soundUri, String id, String taskName) {
+    private void showTaskNotification(Intent intent, long[] vibrate, Uri soundUri, String id, String taskName, String isDone, String interval) {
 
         Intent i = new Intent(getApplicationContext(), AddTaskActivity.class);
         i.putExtra("isUpdate", true);
         i.putExtra("id", id);
         PendingIntent pi = PendingIntent.getActivity(this, Integer.parseInt(id), i, PendingIntent.FLAG_CANCEL_CURRENT);
+
+        if (isDone.compareTo("true") == 0) {
+            setInterval(id, taskName, isDone, interval);
+        }
+
 
         Notification notification = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.drawable.ic_notification)
@@ -151,8 +157,7 @@ public class TaskService extends IntentService {
     }
 
     public static void setDayAlarm(Context context, Date time, boolean isOn) {
-        cancelReminder(context);
-
+        cancelReminder(context, 0);
 
         ComponentName receiver = new ComponentName(context, AlarmReceiver.class);
         PackageManager pm = context.getPackageManager();
@@ -178,7 +183,7 @@ public class TaskService extends IntentService {
 
     }
 
-    private static void cancelReminder(Context context){
+    public static void cancelReminder(Context context, int id) {
         ComponentName receiver = new ComponentName(context, AlarmReceiver.class);
         PackageManager pm = context.getPackageManager();
 
@@ -187,9 +192,34 @@ public class TaskService extends IntentService {
                 PackageManager.DONT_KILL_APP);
 
         Intent intent = TaskService.newIntent(context);
-        PendingIntent pi = PendingIntent.getService(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        intent.putExtra("id", id);
+        PendingIntent pi = PendingIntent.getService(context, id, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         am.cancel(pi);
         pi.cancel();
     }
+
+    public void setInterval(String id, String taskName, String isDone, String interval) {
+        if(interval.compareTo("none") == 0){
+
+        } else if(interval.compareTo("day") == 0){
+
+
+
+        } else if(interval.compareTo("week") == 0){
+
+
+
+        } else if(interval.compareTo("month") == 0){
+
+
+
+        } else if(interval.compareTo("year") == 0){
+
+
+
+        }
+    }
+
+
 }
