@@ -1,4 +1,4 @@
-package com.kanayev.android.taskmanager2;
+package com.kanayev.android.taskmanager2.ui.activity;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -16,6 +16,10 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
+
+import com.kanayev.android.taskmanager2.R;
+import com.kanayev.android.taskmanager2.util.HelpUtils;
+import com.kanayev.android.taskmanager2.model.TaskManagerDBHelper;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -109,7 +113,6 @@ public class AddTaskActivity extends AppCompatActivity implements DatePickerDial
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault());
 
         return dateFormat.toString();
-
     }
 
     public void closeAddTask(View v) {

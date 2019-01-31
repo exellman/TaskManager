@@ -1,11 +1,11 @@
-package com.kanayev.android.taskmanager2;
+package com.kanayev.android.taskmanager2.ui;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.ViewGroup;
 
-class NoScrollRecyclerView extends RecyclerView {
+public class NoScrollRecyclerView extends RecyclerView {
 
     public NoScrollRecyclerView(Context context) {
         super(context);

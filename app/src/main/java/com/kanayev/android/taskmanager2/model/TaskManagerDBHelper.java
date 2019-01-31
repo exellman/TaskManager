@@ -1,7 +1,9 @@
-package com.kanayev.android.taskmanager2;
+package com.kanayev.android.taskmanager2.model;
 
+import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -15,6 +17,7 @@ public class TaskManagerDBHelper extends SQLiteOpenHelper {
 
     public static final String DATABASE_NAME = "ToDoDBHelper.db";
     public static final String CONTACTS_TABLE_NAME = "todo";
+    Intent intent;
 
     public TaskManagerDBHelper(Context context) {
         super(context, DATABASE_NAME, null, 1);

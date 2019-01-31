@@ -1,4 +1,4 @@
-package com.kanayev.android.taskmanager2;
+package com.kanayev.android.taskmanager2.ui.activity;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -14,12 +14,19 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.kanayev.android.taskmanager2.R;
+import com.kanayev.android.taskmanager2.util.SettingsPreferences;
+import com.kanayev.android.taskmanager2.ui.NoScrollRecyclerView;
+import com.kanayev.android.taskmanager2.util.HelpUtils;
+import com.kanayev.android.taskmanager2.model.TaskManagerDBHelper;
+import com.kanayev.android.taskmanager2.adapter.TaskManagerAdapter;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class CreateTodoActivity extends AppCompatActivity {
 
-    long clck = 0;
+    long clck;
 
     Activity activity;
     TaskManagerDBHelper mydb;
@@ -61,6 +68,31 @@ public class CreateTodoActivity extends AppCompatActivity {
         todayText = (TextView) findViewById(R.id.todayText);
         tomorrowText = (TextView) findViewById(R.id.tomorrowText);
         upcomingText = (TextView) findViewById(R.id.upcomingText);
+
+        changeTasks.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                LoadTask loadTask = new LoadTask();
+                if (clck == 0) {
+                    loadTask.execute();
+                    SettingsPreferences.setPrefCheck(getApplicationContext(), clck);
+                    changeTasks.setImageResource(R.drawable.ic_action_to_do);
+                    clck++;
+                } else if (clck == 1) {
+                    loadTask.execute();
+                    SettingsPreferences.setPrefCheck(getApplicationContext(), clck);
+                    changeTasks.setImageResource(R.drawable.ic_action_done_tasks);
+                    clck++;
+                } else if (clck == 2) {
+                    loadTask.execute();
+                    SettingsPreferences.setPrefCheck(getApplicationContext(), clck);
+                    changeTasks.setImageResource(R.drawable.ic_action_all_tasks);
+                    clck = clck - 2;
+                }
+
+            }
+        });
     }
 
     public void openSettings(View v) {
@@ -192,26 +224,4 @@ public class CreateTodoActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(activity));
     }
-
-    public void changeTasks(View v) {
-
-        LoadTask loadTask = new LoadTask();
-        if (clck == 0) {
-            loadTask.execute();
-            SettingsPreferences.setPrefCheck(this, clck);
-            changeTasks.setImageResource(R.drawable.ic_action_to_do);
-            clck++;
-        } else if (clck == 1) {
-            loadTask.execute();
-            SettingsPreferences.setPrefCheck(this, clck);
-            changeTasks.setImageResource(R.drawable.ic_action_done_tasks);
-            clck++;
-        } else if (clck == 2) {
-            loadTask.execute();
-            SettingsPreferences.setPrefCheck(this, clck);
-            changeTasks.setImageResource(R.drawable.ic_action_all_tasks);
-            clck = clck - 2;
-        }
-    }
-
 }

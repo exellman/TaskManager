@@ -1,4 +1,4 @@
-package com.kanayev.android.taskmanager2;
+package com.kanayev.android.taskmanager2.ui.activity;
 
 import android.app.TimePickerDialog;
 import android.content.Intent;
@@ -12,6 +12,10 @@ import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.TimePicker;
 import android.widget.Toast;
+
+import com.kanayev.android.taskmanager2.R;
+import com.kanayev.android.taskmanager2.util.SettingsPreferences;
+import com.kanayev.android.taskmanager2.service.TaskService;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

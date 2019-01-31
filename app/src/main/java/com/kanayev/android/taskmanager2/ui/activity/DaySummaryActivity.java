@@ -1,4 +1,4 @@
-package com.kanayev.android.taskmanager2;
+package com.kanayev.android.taskmanager2.ui.activity;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -10,13 +10,22 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import com.kanayev.android.taskmanager2.R;
+import com.kanayev.android.taskmanager2.ui.NoScrollRecyclerView;
+import com.kanayev.android.taskmanager2.util.HelpUtils;
+import com.kanayev.android.taskmanager2.model.TaskManagerDBHelper;
+import com.kanayev.android.taskmanager2.adapter.TaskManagerAdapter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class DaySummaryActivity extends AppCompatActivity {
+
+    int tasksDone;
 
     Activity activity;
     TaskManagerDBHelper mydb;
@@ -24,6 +33,7 @@ public class DaySummaryActivity extends AppCompatActivity {
     NestedScrollView scrollView;
     ProgressBar loader;
     TextView daySummaryText;
+    ImageView changeTasks;
     ArrayList<HashMap<String, String>> daySummaryList = new ArrayList<HashMap<String, String>>();
 
     public static String KEY_ID = "id";
@@ -33,13 +43,11 @@ public class DaySummaryActivity extends AppCompatActivity {
     public static String KEY_DONE = "isDone";
     public static String KEY_INTERVAL = "interval";
 
-    int tasksDone;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.task_day_summary);
-
 
         activity = DaySummaryActivity.this;
         mydb = new TaskManagerDBHelper(activity);
@@ -73,6 +81,7 @@ public class DaySummaryActivity extends AppCompatActivity {
     public void closeDaySummary(View view) {
         finish();
     }
+
 
     public class LoadTask extends AsyncTask<String, Void, String> {
         @Override

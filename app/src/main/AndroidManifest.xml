@@ -14,25 +14,25 @@
         android:supportsRtl="true"
         android:theme="@style/AppThemeToolBar"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".CreateTodoActivity">
+        <activity android:name=".ui.activity.CreateTodoActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AddTaskActivity"
-            android:parentActivityName=".CreateTodoActivity"/>
-        <activity android:name=".SettingsActivity"
-            android:parentActivityName=".CreateTodoActivity"/>
-        <activity android:name=".DaySummaryActivity"
-            android:parentActivityName=".CreateTodoActivity"/>
+        <activity android:name=".ui.activity.AddTaskActivity"
+            android:parentActivityName=".ui.activity.CreateTodoActivity"/>
+        <activity android:name=".ui.activity.SettingsActivity"
+            android:parentActivityName=".ui.activity.CreateTodoActivity"/>
+        <activity android:name=".ui.activity.DaySummaryActivity"
+            android:parentActivityName=".ui.activity.CreateTodoActivity"/>
 
 
-        <service android:name=".TaskService"
+        <service android:name=".service.TaskService"
                  android:enabled="true">
         </service>
 
-        <receiver android:name=".AlarmReceiver"
+        <receiver android:name=".api.AlarmReceiver"
                   android:enabled="true">
 
         <intent-filter>

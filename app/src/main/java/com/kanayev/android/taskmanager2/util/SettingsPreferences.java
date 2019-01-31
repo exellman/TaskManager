@@ -1,4 +1,4 @@
-package com.kanayev.android.taskmanager2;
+package com.kanayev.android.taskmanager2.util;
 
 import android.content.Context;
 import android.preference.PreferenceManager;
@@ -62,7 +62,7 @@ public class SettingsPreferences {
 
     public static Long getPrefCheck(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context)
-                .getLong(PREF_CHANGE_TASKS, 0L);
+                .getLong(PREF_CHANGE_TASKS, 1L);
     }
 
     public static void setPrefCheck(Context context, long query) {

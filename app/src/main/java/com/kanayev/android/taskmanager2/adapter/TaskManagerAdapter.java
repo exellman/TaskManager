@@ -1,4 +1,4 @@
-package com.kanayev.android.taskmanager2;
+package com.kanayev.android.taskmanager2.adapter;
 
 import android.app.Activity;
 import android.content.DialogInterface;
@@ -14,6 +14,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.amulyakhare.textdrawable.util.ColorGenerator;
+import com.kanayev.android.taskmanager2.ui.activity.AddTaskActivity;
+import com.kanayev.android.taskmanager2.ui.activity.CreateTodoActivity;
+import com.kanayev.android.taskmanager2.util.HelpUtils;
+import com.kanayev.android.taskmanager2.R;
+import com.kanayev.android.taskmanager2.model.TaskManagerDBHelper;
+import com.kanayev.android.taskmanager2.service.TaskService;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -71,10 +77,11 @@ public class TaskManagerAdapter extends RecyclerView.Adapter<TaskManagerAdapter.
         i.putExtra("id", finalMap.get(CreateTodoActivity.KEY_ID));
         i.putExtra("task", finalMap.get(CreateTodoActivity.KEY_TASK));
         i.putExtra("date", finalMap.get(CreateTodoActivity.KEY_DATE));
+        i.putExtra("isDone", finalMap.get(CreateTodoActivity.KEY_DONE));
         i.putExtra("description", finalMap.get(CreateTodoActivity.KEY_DESCRIPTION));
         i.putExtra("interval", finalMap.get(CreateTodoActivity.KEY_INTERVAL));
 
-        TaskService.setTaskAlarm(activity, finalMap);
+        TaskService.setTaskAlarm(activity, /*finalMap,*/ i);
 
         taskManagerViewHolder.parentView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -125,7 +132,7 @@ public class TaskManagerAdapter extends RecyclerView.Adapter<TaskManagerAdapter.
         private TextView task_image;
         private TextView task_name, task_date;
         private ImageView task_image_solved;
-        private View parentView;
+        public View parentView;
         private TaskManagerDBHelper db;
 
         public TaskManagerViewHolder(View itemView) {

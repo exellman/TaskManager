@@ -1,4 +1,4 @@
-package com.kanayev.android.taskmanager2;
+package com.kanayev.android.taskmanager2.util;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -12,7 +12,6 @@ public class HelpUtils {
         SimpleDateFormat format = new SimpleDateFormat(formatString, Locale.getDefault());
         return format.format(updatedate);
     }
-
 
     public static Calendar Epoch2Calender(String epochSeconds) {
         Date updatedate = new Date(Long.parseLong(epochSeconds));

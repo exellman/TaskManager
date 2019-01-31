@@ -29,8 +29,7 @@
                 android:padding="5dp"
                 android:layout_marginTop="1dp"
                 android:background="@android:color/transparent"
-                android:src="@drawable/ic_action_all_tasks"
-                android:onClick="changeTasks"/>
+                android:src="@drawable/ic_action_all_tasks"/>
 
             <TextView
                 android:layout_width="174dp"
@@ -103,7 +102,7 @@
                 android:layout_marginRight="12dp"
                 android:layout_marginLeft="12dp">
 
-                <com.kanayev.android.taskmanager2.NoScrollRecyclerView
+                <com.kanayev.android.taskmanager2.ui.NoScrollRecyclerView
                     android:id="@+id/taskListBefore"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -131,7 +130,7 @@
                 android:layout_marginRight="12dp"
                 android:layout_marginLeft="12dp">
 
-                <com.kanayev.android.taskmanager2.NoScrollRecyclerView
+                <com.kanayev.android.taskmanager2.ui.NoScrollRecyclerView
                     android:id="@+id/taskListToday"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -159,7 +158,7 @@
                 android:layout_marginRight="12dp"
                 android:layout_marginLeft="12dp">
 
-                <com.kanayev.android.taskmanager2.NoScrollRecyclerView
+                <com.kanayev.android.taskmanager2.ui.NoScrollRecyclerView
                     android:id="@+id/taskListTomorrow"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -188,7 +187,7 @@
                 android:layout_marginLeft="12dp"
                 android:layout_marginBottom="10dp">
 
-                <com.kanayev.android.taskmanager2.NoScrollRecyclerView
+                <com.kanayev.android.taskmanager2.ui.NoScrollRecyclerView
                     android:id="@+id/taskListUpcoming"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
