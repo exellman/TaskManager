@@ -8,15 +8,15 @@ import java.util.Locale;
 public class HelpUtils {
 
     public static String Epoch2DateString(String epochSeconds, String formatString) {
-        Date updatedate = new Date(Long.parseLong(epochSeconds));
+        Date updateDate = new Date(Long.parseLong(epochSeconds));
         SimpleDateFormat format = new SimpleDateFormat(formatString, Locale.getDefault());
-        return format.format(updatedate);
+        return format.format(updateDate);
     }
 
     public static Calendar Epoch2Calender(String epochSeconds) {
-        Date updatedate = new Date(Long.parseLong(epochSeconds));
+        Date updateDate = new Date(Long.parseLong(epochSeconds));
         Calendar cal = Calendar.getInstance();
-        cal.setTime(updatedate);
+        cal.setTime(updateDate);
 
         return cal;
     }
