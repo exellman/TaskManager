@@ -81,8 +81,9 @@ public class TaskManagerAdapter extends RecyclerView.Adapter<TaskManagerAdapter.
         i.putExtra("description", finalMap.get(TaskManagerActivity.KEY_DESCRIPTION));
         i.putExtra("interval", finalMap.get(TaskManagerActivity.KEY_INTERVAL));
 
-        TaskService.setTaskAlarm(activity, /*finalMap,*/ i);
+        TaskService.setTaskAlarm(activity, i);
 
+        //Open task.
         taskManagerViewHolder.parentView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -90,6 +91,7 @@ public class TaskManagerAdapter extends RecyclerView.Adapter<TaskManagerAdapter.
             }
         });
 
+        //Delete task.
         taskManagerViewHolder.parentView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(final View v) {

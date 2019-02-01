@@ -26,7 +26,7 @@ import java.util.HashMap;
 
 public class TaskManagerActivity extends AppCompatActivity {
 
-    long clck;
+    long clckCount;
 
     Activity activity;
     TaskManagerDBHelper mydb;
@@ -53,9 +53,9 @@ public class TaskManagerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.task_home);
 
-        clck = SettingsPreferences.getPrefCheck(this);
+        clckCount = SettingsPreferences.getPrefCheck(this);
         changeTasks = (ImageView) findViewById(R.id.changeTasks);
-        activity = TaskManagerActivity.this;
+        activity = new TaskManagerActivity();
         mydb = new TaskManagerDBHelper(activity);
         scrollView = (NestedScrollView) findViewById(R.id.scrollView);
         loader = (ProgressBar) findViewById(R.id.loader);
@@ -74,21 +74,21 @@ public class TaskManagerActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 LoadTask loadTask = new LoadTask();
-                if (clck == 0) {
+                if (clckCount == 0) {
                     loadTask.execute();
-                    SettingsPreferences.setPrefCheck(getApplicationContext(), clck);
+                    SettingsPreferences.setPrefCheck(getApplicationContext(), clckCount);
                     changeTasks.setImageResource(R.drawable.ic_action_to_do);
-                    clck++;
-                } else if (clck == 1) {
+                    clckCount++;
+                } else if (clckCount == 1) {
                     loadTask.execute();
-                    SettingsPreferences.setPrefCheck(getApplicationContext(), clck);
+                    SettingsPreferences.setPrefCheck(getApplicationContext(), clckCount);
                     changeTasks.setImageResource(R.drawable.ic_action_done_tasks);
-                    clck++;
-                } else if (clck == 2) {
+                    clckCount++;
+                } else if (clckCount == 2) {
                     loadTask.execute();
-                    SettingsPreferences.setPrefCheck(getApplicationContext(), clck);
+                    SettingsPreferences.setPrefCheck(getApplicationContext(), clckCount);
                     changeTasks.setImageResource(R.drawable.ic_action_all_tasks);
-                    clck = clck - 2;
+                    clckCount = clckCount - 2;
                 }
 
             }
@@ -203,13 +203,13 @@ public class TaskManagerActivity extends AppCompatActivity {
                 mapToday.put(KEY_DESCRIPTION, cursor.getString(4).toString());
                 mapToday.put(KEY_INTERVAL, cursor.getString(5).toString());
 
-                if (clck == 0) {
+                if (clckCount == 0) {
                     dataList.add(mapToday);
-                } else if (clck == 1) {
+                } else if (clckCount == 1) {
                     if (mapToday.get(KEY_DONE).compareTo("false") == 0) {
                         dataList.add(mapToday);
                     }
-                } else if (clck == 2) {
+                } else if (clckCount == 2) {
                     if (mapToday.get(KEY_DONE).compareTo("true") == 0) {
                         dataList.add(mapToday);
                     }

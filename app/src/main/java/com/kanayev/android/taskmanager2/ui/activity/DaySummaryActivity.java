@@ -10,7 +10,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -33,7 +32,6 @@ public class DaySummaryActivity extends AppCompatActivity {
     NestedScrollView scrollView;
     ProgressBar loader;
     TextView daySummaryText;
-    ImageView changeTasks;
     ArrayList<HashMap<String, String>> daySummaryList = new ArrayList<HashMap<String, String>>();
 
     public static String KEY_ID = "id";

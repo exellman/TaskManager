@@ -1,6 +1,5 @@
 package com.kanayev.android.taskmanager2.model;
 
-import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
