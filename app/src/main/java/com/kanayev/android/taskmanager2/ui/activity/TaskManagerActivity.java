@@ -24,7 +24,7 @@ import com.kanayev.android.taskmanager2.adapter.TaskManagerAdapter;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class CreateTodoActivity extends AppCompatActivity {
+public class TaskManagerActivity extends AppCompatActivity {
 
     long clck;
 
@@ -55,7 +55,7 @@ public class CreateTodoActivity extends AppCompatActivity {
 
         clck = SettingsPreferences.getPrefCheck(this);
         changeTasks = (ImageView) findViewById(R.id.changeTasks);
-        activity = CreateTodoActivity.this;
+        activity = TaskManagerActivity.this;
         mydb = new TaskManagerDBHelper(activity);
         scrollView = (NestedScrollView) findViewById(R.id.scrollView);
         loader = (ProgressBar) findViewById(R.id.loader);

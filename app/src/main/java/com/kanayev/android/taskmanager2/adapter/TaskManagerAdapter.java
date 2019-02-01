@@ -15,7 +15,7 @@ import android.widget.Toast;
 
 import com.amulyakhare.textdrawable.util.ColorGenerator;
 import com.kanayev.android.taskmanager2.ui.activity.AddTaskActivity;
-import com.kanayev.android.taskmanager2.ui.activity.CreateTodoActivity;
+import com.kanayev.android.taskmanager2.ui.activity.TaskManagerActivity;
 import com.kanayev.android.taskmanager2.util.HelpUtils;
 import com.kanayev.android.taskmanager2.R;
 import com.kanayev.android.taskmanager2.model.TaskManagerDBHelper;
@@ -55,9 +55,9 @@ public class TaskManagerAdapter extends RecyclerView.Adapter<TaskManagerAdapter.
         map = data.get(position);
 
         try {
-            taskManagerViewHolder.task_name.setText(map.get(CreateTodoActivity.KEY_TASK));
-            taskManagerViewHolder.task_date.setText(map.get(CreateTodoActivity.KEY_DATE));
-            taskManagerViewHolder.task_image_solved.setVisibility(HelpUtils.isSolved(map.get(CreateTodoActivity.KEY_DONE)) ? View.VISIBLE : View.GONE);
+            taskManagerViewHolder.task_name.setText(map.get(TaskManagerActivity.KEY_TASK));
+            taskManagerViewHolder.task_date.setText(map.get(TaskManagerActivity.KEY_DATE));
+            taskManagerViewHolder.task_image_solved.setVisibility(HelpUtils.isSolved(map.get(TaskManagerActivity.KEY_DONE)) ? View.VISIBLE : View.GONE);
 
             ColorGenerator generator = ColorGenerator.MATERIAL;
             int color = generator.getColor(getItem(position));
@@ -74,12 +74,12 @@ public class TaskManagerAdapter extends RecyclerView.Adapter<TaskManagerAdapter.
 
         final Intent i = new Intent(activity, AddTaskActivity.class);
         i.putExtra("isUpdate", true);
-        i.putExtra("id", finalMap.get(CreateTodoActivity.KEY_ID));
-        i.putExtra("task", finalMap.get(CreateTodoActivity.KEY_TASK));
-        i.putExtra("date", finalMap.get(CreateTodoActivity.KEY_DATE));
-        i.putExtra("isDone", finalMap.get(CreateTodoActivity.KEY_DONE));
-        i.putExtra("description", finalMap.get(CreateTodoActivity.KEY_DESCRIPTION));
-        i.putExtra("interval", finalMap.get(CreateTodoActivity.KEY_INTERVAL));
+        i.putExtra("id", finalMap.get(TaskManagerActivity.KEY_ID));
+        i.putExtra("task", finalMap.get(TaskManagerActivity.KEY_TASK));
+        i.putExtra("date", finalMap.get(TaskManagerActivity.KEY_DATE));
+        i.putExtra("isDone", finalMap.get(TaskManagerActivity.KEY_DONE));
+        i.putExtra("description", finalMap.get(TaskManagerActivity.KEY_DESCRIPTION));
+        i.putExtra("interval", finalMap.get(TaskManagerActivity.KEY_INTERVAL));
 
         TaskService.setTaskAlarm(activity, /*finalMap,*/ i);
 

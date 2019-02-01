@@ -14,18 +14,18 @@
         android:supportsRtl="true"
         android:theme="@style/AppThemeToolBar"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ui.activity.CreateTodoActivity">
+        <activity android:name=".ui.activity.TaskManagerActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name=".ui.activity.AddTaskActivity"
-            android:parentActivityName=".ui.activity.CreateTodoActivity"/>
+            android:parentActivityName=".ui.activity.TaskManagerActivity"/>
         <activity android:name=".ui.activity.SettingsActivity"
-            android:parentActivityName=".ui.activity.CreateTodoActivity"/>
+            android:parentActivityName=".ui.activity.TaskManagerActivity"/>
         <activity android:name=".ui.activity.DaySummaryActivity"
-            android:parentActivityName=".ui.activity.CreateTodoActivity"/>
+            android:parentActivityName=".ui.activity.TaskManagerActivity"/>
 
 
         <service android:name=".service.TaskService"
