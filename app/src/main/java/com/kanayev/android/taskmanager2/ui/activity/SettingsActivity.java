@@ -1,5 +1,6 @@
 package com.kanayev.android.taskmanager2.ui.activity;
 
+import android.annotation.SuppressLint;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.graphics.Color;
@@ -24,19 +25,19 @@ import java.util.Date;
 
 public class SettingsActivity extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener {
 
-    private Switch switchSound, switchVibrate, switchSummary;
     private EditText dateSummary;
 
     int startHour, startMinute, hourFinal, minuteFinal;
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.task_settings);
 
-        switchSound = findViewById(R.id.switch_sound);
-        switchVibrate = findViewById(R.id.switch_vibrate);
-        switchSummary = findViewById(R.id.switch_day_notification);
+        Switch switchSound = findViewById(R.id.switch_sound);
+        Switch switchVibrate = findViewById(R.id.switch_vibrate);
+        Switch switchSummary = findViewById(R.id.switch_day_notification);
         dateSummary = findViewById(R.id.set_notification_date);
 
         switchSound.setChecked(SettingsPreferences.getPrefSound(this));
@@ -85,7 +86,7 @@ public class SettingsActivity extends AppCompatActivity implements TimePickerDia
 
         String timeStr = (hourFinal < 10 ? "0" + hourFinal : "" + hourFinal) + ":" + (minuteFinal < 10 ? "0" + minuteFinal : "" + minuteFinal);
 
-        SimpleDateFormat format = new SimpleDateFormat("HH:mm");
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat format = new SimpleDateFormat("HH:mm");
         Date finalDate = null;
         try {
             finalDate = format.parse(timeStr);
@@ -93,8 +94,9 @@ public class SettingsActivity extends AppCompatActivity implements TimePickerDia
             e.printStackTrace();
         }
 
-        EditText set_notification_date = (EditText) findViewById(R.id.set_notification_date);
+        EditText set_notification_date = findViewById(R.id.set_notification_date);
         set_notification_date.setText(timeStr);
+        assert finalDate != null;
         SettingsPreferences.setPrefTime(this, finalDate.getTime());
         TaskService.setDayAlarm(this, finalDate, SettingsPreferences.getPrefSummary(this));
     }

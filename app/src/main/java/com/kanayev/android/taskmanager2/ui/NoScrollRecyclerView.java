@@ -7,6 +7,15 @@ import android.view.ViewGroup;
 
 public class NoScrollRecyclerView extends RecyclerView {
 
+    @Override
+    public void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        int heightMeasureSpec_custom = MeasureSpec.makeMeasureSpec(
+                Integer.MAX_VALUE >> 2, MeasureSpec.AT_MOST);
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec_custom);
+        ViewGroup.LayoutParams params = getLayoutParams();
+        params.height = getMeasuredHeight();
+    }
+
     public NoScrollRecyclerView(Context context) {
         super(context);
     }
@@ -19,12 +28,5 @@ public class NoScrollRecyclerView extends RecyclerView {
         super(context, attrs, defStyle);
     }
 
-    @Override
-    public void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        int heightMeasureSpec_custom = MeasureSpec.makeMeasureSpec(
-                Integer.MAX_VALUE >> 2, MeasureSpec.AT_MOST);
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec_custom);
-        ViewGroup.LayoutParams params = getLayoutParams();
-        params.height = getMeasuredHeight();
-    }
+
 }

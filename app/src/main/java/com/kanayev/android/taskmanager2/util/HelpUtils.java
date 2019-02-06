@@ -23,11 +23,7 @@ public class HelpUtils {
 
     public static boolean isSolved(String s) {
         boolean isChecked;
-        if (s.compareTo("true") == 0) {
-            isChecked = true;
-        } else {
-            isChecked = false;
-        }
+        isChecked = s.compareTo("true") == 0;
         return isChecked;
     }
 }

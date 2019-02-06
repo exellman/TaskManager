@@ -13,8 +13,8 @@ import java.util.Locale;
 
 public class TaskManagerDBHelper extends SQLiteOpenHelper {
 
-    public static final String DATABASE_NAME = "ToDoDBHelper.db";
-    public static final String CONTACTS_TABLE_NAME = "todo";
+    private static final String DATABASE_NAME = "ToDoDBHelper.db";
+    private static final String CONTACTS_TABLE_NAME = "todo";
 
     public TaskManagerDBHelper(Context context) {
         super(context, DATABASE_NAME, null, 1);
@@ -22,12 +22,12 @@ public class TaskManagerDBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE " + CONTACTS_TABLE_NAME + "(id INTEGER PRIMARY KEY, task TEXT, dateStr INTEGER, isSolved NUMERIC, description TEXT, interval TEXT)");
+        db.execSQL("CREATE TABLE todo(id INTEGER PRIMARY KEY, task TEXT, dateStr INTEGER, isSolved NUMERIC, description TEXT, interval TEXT)");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS " + CONTACTS_TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS todo");
         onCreate(db);
     }
 
@@ -37,12 +37,12 @@ public class TaskManagerDBHelper extends SQLiteOpenHelper {
         Date date = new Date();
         try {
             date = dateFormat.parse(day);
-        } catch (ParseException e) {
+        } catch (ParseException ignored) {
         }
         return date.getTime();
     }
 
-    public boolean insertContact(String task, String dateStr, String isSolved, String description, String interval) {
+    public void insertContact(String task, String dateStr, String isSolved, String description, String interval) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("task", task);
@@ -51,10 +51,9 @@ public class TaskManagerDBHelper extends SQLiteOpenHelper {
         contentValues.put("description", description);
         contentValues.put("interval", interval);
         db.insert(CONTACTS_TABLE_NAME, null, contentValues);
-        return true;
     }
 
-    public boolean updateContact(String id, String task, String dateStr, String isSolved, String description, String interval) {
+    public void updateContact(String id, String task, String dateStr, String isSolved, String description, String interval) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("task", task);
@@ -63,7 +62,6 @@ public class TaskManagerDBHelper extends SQLiteOpenHelper {
         contentValues.put("description", description);
         contentValues.put("interval", interval);
         db.update(CONTACTS_TABLE_NAME, contentValues, "id = ? ", new String[]{id});
-        return true;
     }
 
     public void removeTask(String id) {

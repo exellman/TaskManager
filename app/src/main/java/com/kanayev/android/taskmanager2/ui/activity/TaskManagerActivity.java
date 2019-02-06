@@ -1,5 +1,6 @@
 package com.kanayev.android.taskmanager2.ui.activity;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
@@ -23,6 +24,7 @@ import com.kanayev.android.taskmanager2.adapter.TaskManagerAdapter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 
 public class TaskManagerActivity extends AppCompatActivity {
 
@@ -35,10 +37,10 @@ public class TaskManagerActivity extends AppCompatActivity {
     ProgressBar loader;
     TextView beforeText, todayText, tomorrowText, upcomingText;
     ImageView changeTasks;
-    ArrayList<HashMap<String, String>> beforeList = new ArrayList<HashMap<String, String>>();
-    ArrayList<HashMap<String, String>> todayList = new ArrayList<HashMap<String, String>>();
-    ArrayList<HashMap<String, String>> tomorrowList = new ArrayList<HashMap<String, String>>();
-    ArrayList<HashMap<String, String>> upcomingList = new ArrayList<HashMap<String, String>>();
+    ArrayList<HashMap<String, String>> beforeList;
+    ArrayList<HashMap<String, String>> todayList;
+    ArrayList<HashMap<String, String>> tomorrowList;
+    ArrayList<HashMap<String, String>> upcomingList;
 
     public static String KEY_ID = "id";
     public static String KEY_TASK = "task";
@@ -54,20 +56,25 @@ public class TaskManagerActivity extends AppCompatActivity {
         setContentView(R.layout.task_home);
 
         clckCount = SettingsPreferences.getPrefCheck(this);
-        changeTasks = (ImageView) findViewById(R.id.changeTasks);
+        changeTasks = findViewById(R.id.changeTasks);
         activity = new TaskManagerActivity();
-        mydb = new TaskManagerDBHelper(activity);
-        scrollView = (NestedScrollView) findViewById(R.id.scrollView);
-        loader = (ProgressBar) findViewById(R.id.loader);
-        taskListBefore = (NoScrollRecyclerView) findViewById(R.id.taskListBefore);
-        taskListToday = (NoScrollRecyclerView) findViewById(R.id.taskListToday);
-        taskListTomorrow = (NoScrollRecyclerView) findViewById(R.id.taskListTomorrow);
-        taskListUpcoming = (NoScrollRecyclerView) findViewById(R.id.taskListUpcoming);
+        mydb = new TaskManagerDBHelper(getApplicationContext());
+        scrollView = findViewById(R.id.scrollView);
+        loader = findViewById(R.id.loader);
+        taskListBefore = findViewById(R.id.taskListBefore);
+        taskListToday = findViewById(R.id.taskListToday);
+        taskListTomorrow = findViewById(R.id.taskListTomorrow);
+        taskListUpcoming = findViewById(R.id.taskListUpcoming);
 
-        beforeText = (TextView) findViewById(R.id.beforeText);
-        todayText = (TextView) findViewById(R.id.todayText);
-        tomorrowText = (TextView) findViewById(R.id.tomorrowText);
-        upcomingText = (TextView) findViewById(R.id.upcomingText);
+        beforeList = new ArrayList<>();
+        todayList = new ArrayList<>();
+        tomorrowList = new ArrayList<>();
+        upcomingList = new ArrayList<>();
+
+        beforeText = findViewById(R.id.beforeText);
+        todayText = findViewById(R.id.todayText);
+        tomorrowText = findViewById(R.id.tomorrowText);
+        upcomingText = findViewById(R.id.upcomingText);
 
         changeTasks.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,7 +113,7 @@ public class TaskManagerActivity extends AppCompatActivity {
     }
 
     public void populateData() {
-        mydb = new TaskManagerDBHelper(activity);
+        mydb = new TaskManagerDBHelper(getApplicationContext());
         scrollView.setVisibility(View.GONE);
         loader.setVisibility(View.VISIBLE);
 
@@ -121,6 +128,7 @@ public class TaskManagerActivity extends AppCompatActivity {
     }
 
 
+    @SuppressLint("StaticFieldLeak")
     public class LoadTask extends AsyncTask<String, Void, String> {
         @Override
         protected void onPreExecute() {
@@ -195,22 +203,22 @@ public class TaskManagerActivity extends AppCompatActivity {
         if (cursor != null) {
             cursor.moveToFirst();
             while (!cursor.isAfterLast()) {
-                HashMap<String, String> mapToday = new HashMap<String, String>();
-                mapToday.put(KEY_ID, cursor.getString(0).toString());
-                mapToday.put(KEY_TASK, cursor.getString(1).toString());
-                mapToday.put(KEY_DATE, HelpUtils.Epoch2DateString(cursor.getString(2).toString(), "dd/MM/yyyy HH:mm"));
-                mapToday.put(KEY_DONE, cursor.getString(3).toString());
-                mapToday.put(KEY_DESCRIPTION, cursor.getString(4).toString());
-                mapToday.put(KEY_INTERVAL, cursor.getString(5).toString());
+                HashMap<String, String> mapToday = new HashMap<>();
+                mapToday.put(KEY_ID, cursor.getString(0));
+                mapToday.put(KEY_TASK, cursor.getString(1));
+                mapToday.put(KEY_DATE, HelpUtils.Epoch2DateString(cursor.getString(2), "dd/MM/yyyy HH:mm"));
+                mapToday.put(KEY_DONE, cursor.getString(3));
+                mapToday.put(KEY_DESCRIPTION, cursor.getString(4));
+                mapToday.put(KEY_INTERVAL, cursor.getString(5));
 
                 if (clckCount == 0) {
                     dataList.add(mapToday);
                 } else if (clckCount == 1) {
-                    if (mapToday.get(KEY_DONE).compareTo("false") == 0) {
+                    if (Objects.requireNonNull(mapToday.get(KEY_DONE)).compareTo("false") == 0) {
                         dataList.add(mapToday);
                     }
                 } else if (clckCount == 2) {
-                    if (mapToday.get(KEY_DONE).compareTo("true") == 0) {
+                    if (Objects.requireNonNull(mapToday.get(KEY_DONE)).compareTo("true") == 0) {
                         dataList.add(mapToday);
                     }
                 }
@@ -220,7 +228,7 @@ public class TaskManagerActivity extends AppCompatActivity {
     }
 
     public void loadRecyclerView(final RecyclerView recyclerView, ArrayList<HashMap<String, String>> dataList) {
-        final TaskManagerAdapter adapter = new TaskManagerAdapter(activity, dataList);
+        final TaskManagerAdapter adapter = new TaskManagerAdapter(getApplicationContext(), dataList);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(activity));
     }

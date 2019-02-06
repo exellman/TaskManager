@@ -1,5 +1,6 @@
 package com.kanayev.android.taskmanager2.ui.activity;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
@@ -21,6 +22,7 @@ import com.kanayev.android.taskmanager2.adapter.TaskManagerAdapter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 
 public class DaySummaryActivity extends AppCompatActivity {
 
@@ -32,7 +34,7 @@ public class DaySummaryActivity extends AppCompatActivity {
     NestedScrollView scrollView;
     ProgressBar loader;
     TextView daySummaryText;
-    ArrayList<HashMap<String, String>> daySummaryList = new ArrayList<HashMap<String, String>>();
+    ArrayList<HashMap<String, String>> daySummaryList;
 
     public static String KEY_ID = "id";
     public static String KEY_TASK = "task";
@@ -47,13 +49,14 @@ public class DaySummaryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.task_day_summary);
 
+        daySummaryList = new ArrayList<>();
         activity = DaySummaryActivity.this;
-        mydb = new TaskManagerDBHelper(activity);
-        scrollView = (NestedScrollView) findViewById(R.id.scrollView_day_summary);
-        loader = (ProgressBar) findViewById(R.id.loader_day_summary);
-        taskListDaySummary = (NoScrollRecyclerView) findViewById(R.id.taskListDaySummary);
+        mydb = new TaskManagerDBHelper(getApplicationContext());
+        scrollView = findViewById(R.id.scrollView_day_summary);
+        loader = findViewById(R.id.loader_day_summary);
+        taskListDaySummary = findViewById(R.id.taskListDaySummary);
 
-        daySummaryText = (TextView) findViewById(R.id.daySummaryText);
+        daySummaryText = findViewById(R.id.daySummaryText);
     }
 
     public void openAddTask(View v) {
@@ -62,7 +65,7 @@ public class DaySummaryActivity extends AppCompatActivity {
     }
 
     public void populateData() {
-        mydb = new TaskManagerDBHelper(activity);
+        mydb = new TaskManagerDBHelper(getApplicationContext());
         scrollView.setVisibility(View.GONE);
         loader.setVisibility(View.VISIBLE);
 
@@ -81,6 +84,7 @@ public class DaySummaryActivity extends AppCompatActivity {
     }
 
 
+    @SuppressLint("StaticFieldLeak")
     public class LoadTask extends AsyncTask<String, Void, String> {
         @Override
         protected void onPreExecute() {
@@ -101,6 +105,7 @@ public class DaySummaryActivity extends AppCompatActivity {
             return xml;
         }
 
+        @SuppressLint("SetTextI18n")
         @Override
         protected void onPostExecute(String xml) {
 
@@ -121,15 +126,15 @@ public class DaySummaryActivity extends AppCompatActivity {
         if (cursor != null) {
             cursor.moveToFirst();
             while (!cursor.isAfterLast()) {
-                HashMap<String, String> mapToday = new HashMap<String, String>();
-                mapToday.put(KEY_ID, cursor.getString(0).toString());
-                mapToday.put(KEY_TASK, cursor.getString(1).toString());
-                mapToday.put(KEY_DATE, HelpUtils.Epoch2DateString(cursor.getString(2).toString(), "dd/MM/yyyy HH:mm"));
-                mapToday.put(KEY_DONE, cursor.getString(3).toString());
-                mapToday.put(KEY_DESCRIPTION, cursor.getString(4).toString());
-                mapToday.put(KEY_INTERVAL, cursor.getString(5).toString());
+                HashMap<String, String> mapToday = new HashMap<>();
+                mapToday.put(KEY_ID, cursor.getString(0));
+                mapToday.put(KEY_TASK, cursor.getString(1));
+                mapToday.put(KEY_DATE, HelpUtils.Epoch2DateString(cursor.getString(2), "dd/MM/yyyy HH:mm"));
+                mapToday.put(KEY_DONE, cursor.getString(3));
+                mapToday.put(KEY_DESCRIPTION, cursor.getString(4));
+                mapToday.put(KEY_INTERVAL, cursor.getString(5));
 
-                if (mapToday.get(KEY_DONE).compareTo("true") == 0) {
+                if (Objects.requireNonNull(mapToday.get(KEY_DONE)).compareTo("true") == 0) {
                     tasksDone++;
                 }
 
@@ -140,7 +145,7 @@ public class DaySummaryActivity extends AppCompatActivity {
     }
 
     public void loadRecyclerView(final RecyclerView recyclerView, ArrayList<HashMap<String, String>> dataList) {
-        final TaskManagerAdapter adapter = new TaskManagerAdapter(activity, dataList);
+        final TaskManagerAdapter adapter = new TaskManagerAdapter(getApplicationContext(), dataList);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(activity));
     }

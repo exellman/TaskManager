@@ -31,10 +31,12 @@ import java.util.Date;
 import java.util.Locale;
 
 public class TaskService extends IntentService {
-    TaskManagerDBHelper mydb;
+
 
 
     private static final String TAG = "TaskService";
+
+    TaskManagerDBHelper mydb;
 
     public TaskService() {
         super(TAG);
@@ -73,13 +75,14 @@ public class TaskService extends IntentService {
             Cursor task = mydb.getDataSpecific(id);
             if (task != null) {
                 task.moveToFirst();
-                taskName = task.getString(1).toString();
-                date = (HelpUtils.Epoch2DateString(task.getString(2).toString(), "dd/MM/yyyy HH:mm"));
-                isDone = task.getString(3).toString();
-                description = task.getString(4).toString();
-                interval = task.getString(5).toString();
+                taskName = task.getString(1);
+                date = (HelpUtils.Epoch2DateString(task.getString(2), "dd/MM/yyyy HH:mm"));
+                isDone = task.getString(3);
+                description = task.getString(4);
+                interval = task.getString(5);
                 task.close();
             }
+            assert isDone != null;
             showTaskNotification(intent, vibrate, soundUri, id, taskName, date, isDone, description, interval);
             return;
         }
@@ -161,6 +164,7 @@ public class TaskService extends IntentService {
 
         Date taskTime = date;
         Date currentTime = new Date();
+        assert taskTime != null;
         if (currentTime.getTime() < taskTime.getTime()) {
             alarmManager.set(AlarmManager.RTC_WAKEUP, taskTime.getTime(), pi);
             Log.i(TAG, "Task " + name + " added");

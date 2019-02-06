@@ -12,7 +12,6 @@ import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -38,7 +37,6 @@ public class AddTaskActivity extends AppCompatActivity implements DatePickerDial
     String intervalFinal;
     String updateInterval;
 
-    private RadioGroup rgFrequency;
     private RadioButton rbNone, rbDay, rbWeek, rbMonth, rbYear;
 
     Intent intent;
@@ -66,12 +64,11 @@ public class AddTaskActivity extends AppCompatActivity implements DatePickerDial
 
     public void set_update() {
         id = intent.getStringExtra("id");
-        TextView toolbar_task_add_title = (TextView) findViewById(R.id.toolbar_task_add_title);
-        EditText task_name = (EditText) findViewById(R.id.task_name);
-        EditText task_date = (EditText) findViewById(R.id.task_date);
-        EditText task_description = (EditText) findViewById(R.id.task_description);
-        CheckBox task_done_checkbox = (CheckBox) findViewById(R.id.task_done_checkbox);
-        rgFrequency = findViewById(R.id.rg_frequency);
+        TextView toolbar_task_add_title = findViewById(R.id.toolbar_task_add_title);
+        EditText task_name = findViewById(R.id.task_name);
+        EditText task_date = findViewById(R.id.task_date);
+        EditText task_description = findViewById(R.id.task_description);
+        CheckBox task_done_checkbox = findViewById(R.id.task_done_checkbox);
         rbDay = findViewById(R.id.rb_day);
         rbNone = findViewById(R.id.rb_none);
         rbWeek = findViewById(R.id.rb_week);
@@ -84,15 +81,15 @@ public class AddTaskActivity extends AppCompatActivity implements DatePickerDial
         if (task != null) {
             task.moveToFirst();
 
-            task_name.setText(task.getString(1).toString());
-            Calendar cal = HelpUtils.Epoch2Calender(task.getString(2).toString());
+            task_name.setText(task.getString(1));
+            Calendar cal = HelpUtils.Epoch2Calender(task.getString(2));
             startYear = cal.get(Calendar.YEAR);
             startMonth = cal.get(Calendar.MONTH);
             startDay = cal.get(Calendar.DAY_OF_MONTH);
-            task_date.setText(HelpUtils.Epoch2DateString(task.getString(2).toString(), "dd/MM/yyyy HH:mm"));
-            task_done_checkbox.setChecked(HelpUtils.isSolved(task.getString(3).toString()));
-            task_description.setText(task.getString(4).toString());
-            updateInterval = task.getString(5).toString();
+            task_date.setText(HelpUtils.Epoch2DateString(task.getString(2), "dd/MM/yyyy HH:mm"));
+            task_done_checkbox.setChecked(HelpUtils.isSolved(task.getString(3)));
+            task_description.setText(task.getString(4));
+            updateInterval = task.getString(5);
 
             if (updateInterval.compareTo("none") == 0) {
                 rbNone.setChecked(true);
@@ -121,15 +118,14 @@ public class AddTaskActivity extends AppCompatActivity implements DatePickerDial
 
     public void doneAddTask(View v) {
         int errorStep = 0;
-        EditText task_name = (EditText) findViewById(R.id.task_name);
-        EditText task_date = (EditText) findViewById(R.id.task_date);
-        EditText task_description = (EditText) findViewById(R.id.task_description);
-        CheckBox task_solved_checkbox = (CheckBox) findViewById(R.id.task_done_checkbox);
+        EditText task_name = findViewById(R.id.task_name);
+        EditText task_date = findViewById(R.id.task_date);
+        EditText task_description = findViewById(R.id.task_description);
+        CheckBox task_solved_checkbox = findViewById(R.id.task_done_checkbox);
         nameFinal = task_name.getText().toString();
         dateFinal = task_date.getText().toString();
         descriptionFinal = task_description.getText().toString();
 
-        rgFrequency = findViewById(R.id.rg_frequency);
         rbDay = findViewById(R.id.rb_day);
         rbNone = findViewById(R.id.rb_none);
         rbWeek = findViewById(R.id.rb_week);
@@ -215,7 +211,7 @@ public class AddTaskActivity extends AppCompatActivity implements DatePickerDial
         String time = (hourFinal < 10 ? "0" + hourFinal : "" + hourFinal) + ":" + (minuteFinal < 10 ? "0" + minuteFinal : "" + minuteFinal);
         String finalDate = date + " " + time;
 
-        EditText task_date = (EditText) findViewById(R.id.task_date);
+        EditText task_date = findViewById(R.id.task_date);
         task_date.setText(finalDate);
     }
 }

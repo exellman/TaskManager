@@ -19,20 +19,20 @@ public class AlarmReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
 
-        Log.i(TAG, "Received broadcast intent: " + intent.getAction());
-        String id = intent.getStringExtra("id");
-        TaskManagerDBHelper db = new TaskManagerDBHelper(context);
-        Cursor task = db.getDataSpecific(id);
-        if (task != null) {
-            task.moveToFirst();
-            while (!task.isAfterLast()) {
-                TaskService.setTaskAlarm(context, intent);
-                task.moveToNext();
-            }
-        }
-
-        Log.i(TAG, new Date(SettingsPreferences.getPrefTime(context)).toString());
-        TaskService.setDayAlarm(context, new Date(SettingsPreferences.getPrefTime(context)), SettingsPreferences.getPrefSummary(context));
+//        Log.i(TAG, "Received broadcast intent: " + intent.getAction());
+//        String id = intent.getStringExtra("id");
+//        TaskManagerDBHelper db = new TaskManagerDBHelper(context);
+//        Cursor task = db.getDataSpecific(id);
+//        if (task != null) {
+//            task.moveToFirst();
+//            while (!task.isAfterLast()) {
+//                TaskService.setTaskAlarm(context, intent);
+//                task.moveToNext();
+//            }
+//        }
+//
+//        Log.i(TAG, new Date(SettingsPreferences.getPrefTime(context)).toString());
+//        TaskService.setDayAlarm(context, new Date(SettingsPreferences.getPrefTime(context)), SettingsPreferences.getPrefSummary(context));
 
     }
 }

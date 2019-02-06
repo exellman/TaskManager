@@ -13,7 +13,7 @@ public class SettingsPreferences {
 
     public static Long getPrefTime(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context)
-                .getLong(PREF_TIME, 1546596028480L); //12:00
+                .getLong(PREF_TIME, 1546596028480L);
     }
 
     public static void setPrefTime(Context context, long query) {
