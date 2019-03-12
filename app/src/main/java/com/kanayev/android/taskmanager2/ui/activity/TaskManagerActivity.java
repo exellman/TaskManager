@@ -228,7 +228,7 @@ public class TaskManagerActivity extends AppCompatActivity {
     }
 
     public void loadRecyclerView(final RecyclerView recyclerView, ArrayList<HashMap<String, String>> dataList) {
-        final TaskManagerAdapter adapter = new TaskManagerAdapter(getApplicationContext(), dataList);
+        final TaskManagerAdapter adapter = new TaskManagerAdapter(this, dataList);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(activity));
     }
