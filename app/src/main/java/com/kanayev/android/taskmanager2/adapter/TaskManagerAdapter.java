@@ -30,7 +30,6 @@ import java.util.Objects;
 
 public class TaskManagerAdapter extends RecyclerView.Adapter<TaskManagerAdapter.TaskManagerViewHolder> {
     @SuppressLint("StaticFieldLeak")
-    private static Activity activity;
     Context context;
     private ArrayList<HashMap<String, String>> data;
 
@@ -38,13 +37,11 @@ public class TaskManagerAdapter extends RecyclerView.Adapter<TaskManagerAdapter.
         private TextView task_image;
         private TextView task_name, task_date;
         private ImageView task_image_solved;
-        private Activity acc;
         View parentView;
         TaskManagerDBHelper db;
 
         TaskManagerViewHolder(View itemView) {
             super(itemView);
-            this.acc = activity;
             this.db = new TaskManagerDBHelper(itemView.getContext());
             this.parentView = itemView;
             this.task_image = itemView.findViewById(R.id.task_image);
@@ -133,7 +130,6 @@ public class TaskManagerAdapter extends RecyclerView.Adapter<TaskManagerAdapter.
                         data.remove(pos);
                         notifyDataSetChanged();
                         Objects.requireNonNull(taskManagerViewHolder).db.removeTask(idd);
-                        activity.recreate();
 
                         Toast.makeText(v.getContext(), "Task " + taskName + " Removed.", Toast.LENGTH_SHORT).show();
                     }
